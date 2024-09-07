@@ -23,17 +23,18 @@
     "@angular/platform-browser": "^18.2.3",
     "@angular/platform-browser-dynamic": "^18.2.3",
     "@angular/router": "^18.2.3",
-    "rxjs": "^7.0.0",
-    "zone.js": "~0.13.0",
     "bootstrap": "^5.3.3",
-    "ngx-cookie-service": "^13.0.0"
+    "ngx-cookie-service": "^13.0.0",
+    "rxjs": "^7.0.0",
+    "zone.js": "~0.13.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.2.3",
+    "@angular/cli": "^18.2.3",
     "@angular/compiler-cli": "^18.2.3",
     "@angular/language-service": "^18.2.3",
-    "typescript": "^5.4.0",
     "karma": "~6.3.9",
-    "protractor": "^7.0.0"
+    "protractor": "^7.0.0",
+    "typescript": "^5.4.0"
   }
 }
