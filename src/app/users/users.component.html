@@ -1,0 +1,73 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <mat-card>
+                <mat-card-title-group>
+                    <mat-card-title>Users</mat-card-title>
+                    <span>
+                        <button mat-mini-fab color="primary" matTooltip="New user"
+                            [routerLink]="['/user']" [libDisplayAuthorizePolicy]="policies.USER_ADD">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                    </span>
+                </mat-card-title-group>
+
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col-6">
+                            <mat-form-field style="width: 100%;">
+                                <input matInput placeholder="Filter" (change)="onFilter($event?.target?.value)" />
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-center" *ngIf="isLoading">
+                        <mat-spinner diameter="50"></mat-spinner>
+                    </div>
+
+                    <table mat-table [dataSource]="dataSource" [hidden]="isLoading" matSort
+                        (matSortChange)="onSort()" style="width: 100%">
+                        <ng-container matColumnDef="fullName">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Full name</th>
+                            <td mat-cell *matCellDef="let item;">
+                                <a [routerLink]="['/user', item.id]">{{ item.fullName || emptyFullNameMessage }}</a>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="statusCode">
+                            <th mat-header-cell *matHeaderCellDef>Status</th>
+                            <td mat-cell *matCellDef="let item;">
+                                <app-user-status [statusCode]="item.statusCode"></app-user-status>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="email">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+                            <td mat-cell *matCellDef="let item;">{{ item.email }}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="emailConfirmed">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Email confirmed</th>
+                            <td mat-cell *matCellDef="let item;">{{ item.emailConfirmed | yesNo }}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="phoneNumber">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Phone</th>
+                            <td mat-cell *matCellDef="let item;">{{ item.phoneNumber }}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="phoneNumberConfirmed">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Phone confirmed</th>
+                            <td mat-cell *matCellDef="let item;">{{ item.phoneNumberConfirmed | yesNo }}</td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="columns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+                    </table>
+                    <mat-paginator [pageSizeOptions]="[20, 50, 100]" (page)="onPage()" showFirstLastButtons>
+                    </mat-paginator>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+<div>
+    <h1 mat-dialog-title>Application token</h1>
+
+    <form [formGroup]="form">
+        <div class="row">
+            <mat-form-field class="col-12">
+                <input matInput placeholder="Name" formControlName="name" />
+            </mat-form-field>
+
+            <mat-form-field class="col-12">
+                <input matInput [matDatepicker]="expirationDatepicker" placeholder="Expiration time"
+                    formControlName="expirationTimeUtc" [min]="minExpirationTime">
+                <mat-datepicker-toggle matSuffix [for]="expirationDatepicker"></mat-datepicker-toggle>
+                <mat-datepicker #expirationDatepicker></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <h3 style="margin: 12px 0 0;">Roles</h3>
+        <app-roles-selector [roles]="roles" [(selectedRoles)]="tokenRoles"></app-roles-selector>
+
+        <h3 style="margin: 12px 0 0;">Claims</h3>
+        <app-claims-selector [claims]="claims" [(selectedClaims)]="tokenClaims"></app-claims-selector>
+
+        <br />
+        <mat-card-subtitle style="display: flex;">
+            Custom fields
+            <span flex class="spacer"></span>
+            <button mat-mini-fab type="button" color="primary" matTooltip="Add new field" (click)="addCustomField()">
+                <mat-icon>add</mat-icon>
+            </button>
+        </mat-card-subtitle>
+        <div formArrayName="customFields">
+            <div *ngFor="let customFieldForm of customFieldsFormArray?.controls">
+                <div class="row" [formGroup]="customFieldForm">
+                    <mat-form-field class="col-5">
+                        <input matInput placeholder="Key" formControlName="key" />
+                    </mat-form-field>
+
+                    <mat-form-field class="col-6">
+                        <input matInput placeholder="Value" formControlName="value" />
+                    </mat-form-field>
+
+                    <button class="col-1 text-danger" mat-icon-button (click)="removeCustomField(customFieldForm)">
+                        <mat-icon>clear</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div mat-dialog-actions align="end" style="margin-top: 12px;">
+        <button mat-flat-button color="primary" (click)="create()" cdkFocusInitial>
+            Create
+        </button>
+        <button mat-stroked-button [mat-dialog-close]="null">Cancel</button>
+    </div>
+</div>

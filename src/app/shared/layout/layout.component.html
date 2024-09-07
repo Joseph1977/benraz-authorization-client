@@ -1,0 +1,45 @@
+<mat-toolbar>
+    <mat-toolbar-row>
+        <a class="nav-link" href="/">
+            <img src="./assets/images/benraz-logo.png" height="35" class="d-inline-block align-top" alt="benraz-logo">
+        </a>
+
+        <span flex class="spacer"></span>
+
+        <span class="profile-image">
+            <img height="34px" class="rounded-circle" src="./assets/images/avatar.png" />
+        </span>
+
+        <span class="profile">
+            <strong>{{ user?.name }}</strong>
+        </span>
+
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>menu</mat-icon>
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<br />
+<router-outlet></router-outlet>
+<br />
+
+<mat-menu #menu="matMenu" color="primary" class="main-menu">
+    <button mat-menu-item routerLink="/applications" [libDisplayAuthorizePolicy]="policies.APPLICATION_READ">
+        <mat-icon>devices</mat-icon>
+        <span>Applications</span>
+    </button>
+    <button mat-menu-item routerLink="/users" [libDisplayAuthorizePolicy]="policies.USER_READ">
+        <mat-icon>people</mat-icon>
+        <span>Users</span>
+    </button>
+    <button mat-menu-item routerLink="/roles-claims" [libDisplayAuthorizePolicy]="policies.ROLE_READ">
+        <mat-icon>work_outline</mat-icon>
+        <span>Roles & Claims</span>
+    </button>
+    <mat-divider></mat-divider>
+    <button mat-menu-item (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Logout</span>
+    </button>
+</mat-menu>

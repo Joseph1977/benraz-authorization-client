@@ -1,0 +1,53 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+            <mat-card>
+                <mat-card-title>Role</mat-card-title>
+
+                <div class="d-flex justify-content-center" *ngIf="isLoading">
+                    <mat-spinner diameter="50"></mat-spinner>
+                </div>
+
+                <mat-card-content *ngIf="!isLoading">
+                    <form [formGroup]="form">
+                        <div [libEditAuthorizePolicy]="policies.ROLE_UPDATE">
+                            <div class="row">
+                                <mat-form-field class="col-12">
+                                    <input matInput placeholder="Name" formControlName="name" />
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </form>
+                </mat-card-content>
+
+                <mat-card-subtitle style="margin: 0;">Role claims</mat-card-subtitle>
+                <mat-card-content>
+                    <app-claims-selector [claims]="claims" [(selectedClaims)]="roleClaims"></app-claims-selector>
+                </mat-card-content>
+
+                <mat-card-actions>
+                    <div class="mat-card-actions-inner">
+                        <span flex class="spacer"></span>
+
+                        <!-- Add -->
+                        <button mat-flat-button color="primary" type="submit" (click)="save()" *ngIf="!roleId"
+                            [libDisplayAuthorizePolicy]="policies.ROLE_ADD">
+                            Save
+                        </button>
+
+                        <!-- Update -->
+                        <button mat-flat-button color="primary" type="submit" (click)="save()" *ngIf="roleId"
+                            [libDisplayAuthorizePolicy]="policies.ROLE_UPDATE">
+                            Save
+                        </button>
+
+                        <!-- Close -->
+                        <button mat-stroked-button type="button" (click)="cancel()">
+                            Close
+                        </button>
+                    </div>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+</div>

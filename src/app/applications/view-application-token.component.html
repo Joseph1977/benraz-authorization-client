@@ -1,0 +1,70 @@
+<div>
+    <h1 mat-dialog-title>Application token</h1>
+
+    <div class="row" *ngIf="applicationToken">
+        <mat-form-field class="col-12">
+            <input matInput placeholder="Id" [ngModel]="applicationToken.id" readonly />
+        </mat-form-field>
+
+        <mat-form-field class="col-12">
+            <input matInput placeholder="Name" [ngModel]="applicationToken.name" readonly />
+        </mat-form-field>
+
+        <mat-form-field class="col-12">
+            <input matInput placeholder="Expiration time"
+                [ngModel]="applicationToken.expirationTimeUtc | date: 'MM/dd/yy hh:mm a'" readonly />
+        </mat-form-field>
+
+        <mat-form-field class="col-12">
+            <input matInput placeholder="Create time"
+                [ngModel]="applicationToken.createTimeUtc | date: 'MM/dd/yy hh:mm a'" readonly />
+        </mat-form-field>
+
+        <mat-form-field class="col-12">
+            <input matInput placeholder="Created by" [ngModel]="applicationToken.createdBy" readonly />
+        </mat-form-field>
+
+        <div class="col-12">
+            <h3 style="margin: 12px 0;">Roles</h3>
+            <mat-chip-list>
+                <mat-chip *ngFor="let role of applicationToken.roles">{{ role }}</mat-chip>
+            </mat-chip-list>
+            <span *ngIf="!applicationToken.roles.length">None</span>
+        </div>
+
+        <div class="col-12" style="margin-top: 12px;">
+            <h3 style="margin: 12px 0;">Claims</h3>
+            <mat-chip-list>
+                <mat-chip *ngFor="let claim of applicationToken.claims">{{ claim.value }}</mat-chip>
+            </mat-chip-list>
+            <span *ngIf="!applicationToken.claims.length">None</span>
+        </div>
+
+        <div class="col-12" style="margin-top: 12px;">
+            <h3 style="margin: 12px 0;">Custom fields</h3>
+            <mat-chip-list>
+                <mat-chip *ngFor="let customField of applicationToken.customFields">
+                    {{ customField.key }}: {{ customField.value }}
+                </mat-chip>
+            </mat-chip-list>
+            <span *ngIf="!applicationToken.customFields.length">None</span>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="applicationTokenValue">
+        <mat-form-field class="col-12">
+            <mat-label>Token</mat-label>
+            <textarea matInput rows="10" [ngModel]="applicationTokenValue" readonly></textarea>
+        </mat-form-field>
+    </div>
+
+    <div mat-dialog-actions align="end" style="margin-top: 12px;">
+        <button mat-flat-button color="primary" [cdkCopyToClipboard]="applicationTokenValue"
+            *ngIf="applicationTokenValue">
+            <mat-icon>file_copy</mat-icon>
+            Copy
+        </button>
+
+        <button mat-stroked-button [mat-dialog-close]="null">Close</button>
+    </div>
+</div>

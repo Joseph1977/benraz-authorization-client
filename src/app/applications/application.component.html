@@ -1,0 +1,164 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-lg-6 offset-lg-3">
+            <mat-card>
+                <mat-card-title>Application</mat-card-title>
+
+                <div class="d-flex justify-content-center" *ngIf="isLoading">
+                    <mat-spinner diameter="50"></mat-spinner>
+                </div>
+
+                <form [formGroup]="form" [hidden]="isLoading">
+                    <mat-card-content>
+                        <div [libEditAuthorizePolicy]="policies.APPLICATION_UPDATE">
+                            <div class="row">
+                                <mat-form-field class="col-12">
+                                    <input matInput placeholder="Name" formControlName="name" />
+                                </mat-form-field>
+
+                                <mat-form-field class="col-12" *ngIf="applicationId">
+                                    <input matInput placeholder="Application id" formControlName="id" readonly />
+                                </mat-form-field>
+
+                                <mat-form-field class="col-12" *ngIf="applicationId">
+                                    <input matInput placeholder="Audience" formControlName="audience" readonly />
+                                </mat-form-field>
+
+                                <div class="col-12">
+                                    <mat-checkbox color="primary" formControlName="isAccessTokenCookieEnabled"
+                                        (change)="changeIsAccessTokenCookieEnabled()">
+                                        Enable access token cookie
+                                    </mat-checkbox>
+                                </div>
+
+                                <mat-form-field class="col-12" *ngIf="isAccessTokenCookieEnabled">
+                                    <input matInput placeholder="Access token cookie name"
+                                        formControlName="accessTokenCookieName" />
+                                </mat-form-field>
+
+                                <div class="col-12" *ngIf="isAccessTokenCookieEnabled">
+                                    <mat-checkbox color="primary" formControlName="isAccessTokenFragmentDisabled">
+                                        Disable access token URL fragment
+                                    </mat-checkbox>
+                                </div>
+                            </div>
+                            <div formArrayName="urls">
+                                <div *ngFor="let urlForm of urlsFormArray?.controls">
+                                    <div [formGroup]="urlForm" class="row">
+                                        <mat-form-field class="col-12">
+                                            <input matInput [placeholder]="urlForm.get('typeCode').value | urlType"
+                                                formControlName="url" />
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card-content>
+
+                    <mat-card-content>
+                        <mat-tab-group>
+                            <mat-tab label="SSO connections">
+                                <div class="row" style="margin-top: 12px;">
+                                    <div class="col-12" style="display: flex;">
+                                        <span flex class="spacer"></span>
+                                        <button mat-mini-fab color="primary" matTooltip="Add SSO connection"
+                                            [matMenuTriggerFor]="appMenu" [disabled]="availableProviders?.length === 0"
+                                            [libDisplayAuthorizePolicy]="policies.APPLICATION_UPDATE">
+                                            <mat-icon>add</mat-icon>
+                                        </button>
+                                    </div>
+                                </div>
+                                <mat-menu #appMenu="matMenu">
+                                    <button mat-menu-item *ngFor="let ssoProviderCode of availableProviders"
+                                        (click)="addSsoConnection(ssoProviderCode)">
+                                        {{ ssoProviderCode | ssoProvider }}
+                                    </button>
+                                </mat-menu>
+                                <mat-accordion multi="true">
+                                    <mat-expansion-panel
+                                        *ngFor="let ssoConnectionForm of ssoConnectionsFormArray?.controls; let i = index;"
+                                        [expanded]="isPanelOpen(i)" (opened)="openPanel(i)" (closed)="closePanel(i)"
+                                        class="mat-elevation-z0">
+                                        <mat-expansion-panel-header>
+                                            {{ ssoConnectionForm.value.ssoProviderCode | ssoProvider }}
+                                        </mat-expansion-panel-header>
+                                        <ng-template matExpansionPanelContent>
+                                            <div [formGroup]="ssoConnectionForm" class="row"
+                                                [libEditAuthorizePolicy]="policies.APPLICATION_UPDATE">
+                                                <div
+                                                    *ngIf="ssoConnectionForm.value.ssoProviderCode !== ssoProviderCode.Internal">
+                                                    <mat-form-field class="col-12">
+                                                        <input matInput placeholder="Authorization URL"
+                                                            formControlName="authorizationUrl" />
+                                                    </mat-form-field>
+                                                    <mat-form-field class="col-12">
+                                                        <input matInput placeholder="Token URL"
+                                                            formControlName="tokenUrl" />
+                                                    </mat-form-field>
+                                                    <mat-form-field class="col-12">
+                                                        <input matInput placeholder="Client id"
+                                                            formControlName="clientId" />
+                                                    </mat-form-field>
+                                                    <mat-form-field class="col-12">
+                                                        <input matInput placeholder="Client secret"
+                                                            formControlName="clientSecret" />
+                                                    </mat-form-field>
+                                                    <mat-form-field class="col-12">
+                                                        <input matInput placeholder="Scope" formControlName="scope" />
+                                                    </mat-form-field>
+                                                </div>
+
+                                                <div class="col-12" style="display: flex;">
+                                                    <mat-checkbox color="primary" formControlName="isEnabled">
+                                                        Enabled
+                                                    </mat-checkbox>
+                                                    <span flex class="spacer"></span>
+                                                    <button mat-flat-button
+                                                        (click)="removeSsoConnection(ssoConnectionForm)">
+                                                        Remove
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+                            </mat-tab>
+                            <mat-tab label="Access tokens" [disabled]="!applicationId">
+                                <app-application-tokens></app-application-tokens>
+                            </mat-tab>
+                        </mat-tab-group>
+                    </mat-card-content>
+
+                    <mat-card-actions>
+                        <div class="mat-card-actions-inner">
+                            <!-- Delete -->
+                            <button mat-flat-button color="warn" (click)="delete()" *ngIf="applicationId"
+                                [libDisplayAuthorizePolicy]="policies.APPLICATION_DELETE">
+                                Delete
+                            </button>
+
+                            <span flex class="spacer"></span>
+
+                            <!-- Add -->
+                            <button mat-flat-button color="primary" type="submit" (click)="save()"
+                                *ngIf="!applicationId" [libDisplayAuthorizePolicy]="policies.APPLICATION_ADD">
+                                Save
+                            </button>
+
+                            <!-- Update -->
+                            <button mat-flat-button color="primary" type="submit" (click)="save()" *ngIf="applicationId"
+                                [libDisplayAuthorizePolicy]="policies.APPLICATION_UPDATE">
+                                Save
+                            </button>
+
+                            <!-- Close -->
+                            <button mat-stroked-button type="button" (click)="cancel()">
+                                Close
+                            </button>
+                        </div>
+                    </mat-card-actions>
+                </form>
+            </mat-card>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,168 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-lg-6 offset-lg-3">
+            <mat-card>
+
+                <mat-card-title-group>
+                    <mat-card-title>User</mat-card-title>
+                    <span *ngIf="user" style="font-size: 15px;">
+                        <button mat-flat-button [matMenuTriggerFor]="changeStatusMenu">
+                            <app-user-status [statusCode]="user?.statusCode"></app-user-status>
+                        </button>
+                        <mat-menu #changeStatusMenu="matMenu">
+                            <button mat-menu-item *ngIf="showActivate" [disabled]="!canActivate" (click)="activate()">
+                                Activate
+                                <span flex class="spacer"></span>
+                                <mat-icon *ngIf="!canActivate"
+                                    matTooltip="Account could be activated only from Payment suspended status">
+                                    help
+                                </mat-icon>
+                            </button>
+                            <button mat-menu-item *ngIf="showSuspendPayments" [disabled]="!canSuspendPayments"
+                                (click)="suspendPayments()">
+                                Suspend payments
+                                <span flex class="spacer"></span>
+                                <mat-icon *ngIf="!canSuspendPayments"
+                                    matTooltip="Payments could be suspended only for account in Active status">
+                                    help
+                                </mat-icon>
+                            </button>
+                            <button mat-menu-item *ngIf="showBlock" [disabled]="!canBlock" (click)="block()">
+                                Block
+                                <span flex class="spacer"></span>
+                                <mat-icon *ngIf="!canBlock"
+                                    matTooltip="Account could be blocked only from Payment suspended status">
+                                    help
+                                </mat-icon>
+                            </button>
+                            <button mat-menu-item *ngIf="showUnblock" [disabled]="!canUnblock" (click)="unblock()">
+                                Unblock
+                                <span flex class="spacer"></span>
+                                <mat-icon *ngIf="!canUnblock"
+                                    matTooltip="Account could be unblocked only from Blocked status">
+                                    help
+                                </mat-icon>
+                            </button>
+                        </mat-menu>
+                    </span>
+                </mat-card-title-group>
+
+                <div class="d-flex justify-content-center" *ngIf="isLoading">
+                    <mat-spinner diameter="50"></mat-spinner>
+                </div>
+
+                <form [formGroup]="form" [hidden]="isLoading">
+                    <mat-card-content>
+                        <div>
+                            <div class="row">
+                                <mat-form-field class="col-12">
+                                    <input matInput placeholder="Full name" formControlName="fullName" maxlength="500"
+                                        [readonly]="userId" />
+                                </mat-form-field>
+
+                                <mat-form-field class="col-12">
+                                    <input matInput type="email" placeholder="Email" formControlName="email"
+                                        [readonly]="userId" />
+                                </mat-form-field>
+
+                                <mat-form-field class="col-12">
+                                    <input matInput placeholder="Phone number" formControlName="phoneNumber"
+                                        [readonly]="userId" />
+                                </mat-form-field>
+
+                                <div class="col-12">
+                                    <mat-checkbox color="primary" formControlName="isSsoOnly" [disabled]="userId">
+                                        Only SSO login
+                                    </mat-checkbox>
+                                </div>
+
+                                <mat-form-field class="col-12" *ngIf="!userId && !isSsoOnly">
+                                    <input matInput type="password" placeholder="Password (Min 6 symbols)"
+                                        formControlName="password" />
+                                </mat-form-field>
+
+                                <mat-form-field class="col-12" *ngIf="!userId && !isSsoOnly">
+                                    <input matInput type="password" placeholder="Repeat password"
+                                        formControlName="repeatPassword" />
+                                </mat-form-field>
+
+                                <div class="col-12 with-spacer" *ngIf="userId && !isSsoOnly">
+                                    <span flex class="spacer"></span>
+                                    <button mat-stroked-button (click)="resetPassword()">
+                                        Reset password
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <mat-card-title>User access control</mat-card-title>
+                        <div>
+                            <div class="row">
+                                <div class="col-9" style="margin-bottom: 0.5rem;" *ngIf="userId && user != null" [ngClass]="{
+                                    'text-danger' : user.lockoutEnd,
+                                    'text-success' : !user.lockoutEnd
+                                }">
+                                    <span>{{user.lockoutEnd === null ? 'Unlocked ' : 'Locked'}} </span>
+                                </div>
+                                <div class="col-12" style="margin-bottom: 0.5rem;" *ngIf="userId && user != null">
+                                    Failed login attempts: {{user.accessFailedCount}}
+                                </div>
+                                <div class="col-12" style="margin-bottom: 0.5rem;" *ngIf="userId && user != null && user.lockoutEnd">
+                                    Automatic unlock time: {{user.lockoutEnd | date: 'MM/dd/yy hh:mm a'}}
+                                </div>
+                                <div class="col-12 with-spacer" *libIfAuthorizePolicy="policies.USER_UNLOCK">
+                                    <span flex class="spacer"></span>
+                                    <button mat-stroked-button (click)="unlock()" [disabled]="user?.lockoutEnd === null">Unlock user</button>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card-content>
+
+                    <div *libIfAuthorizePolicy="policies.USER_ROLE_READ">
+                        <mat-card-subtitle style="margin: 0;">Roles</mat-card-subtitle>
+                        <mat-card-content [libEditAuthorizePolicy]="policies.USER_ROLE_UPDATE">
+                            <app-roles-selector [roles]="roles" [(selectedRoles)]="userRoles">
+                            </app-roles-selector>
+                        </mat-card-content>
+                    </div>
+
+                    <div *libIfAuthorizePolicy="policies.USER_CLAIM_READ">
+                        <mat-card-subtitle style="margin: 0;">Claims</mat-card-subtitle>
+                        <mat-card-content [libEditAuthorizePolicy]="policies.USER_CLAIM_UPDATE">
+                            <app-claims-selector [claims]="claims" [(selectedClaims)]="userClaims">
+                            </app-claims-selector>
+                        </mat-card-content>
+                    </div>
+
+                    <mat-card-actions>
+                        <div class="mat-card-actions-inner">
+                            <!-- Delete -->
+                            <button mat-flat-button color="warn" (click)="delete()"
+                                [libDisplayAuthorizePolicy]="policies.USER_DELETE">
+                                Delete
+                            </button>
+
+                            <span flex class="spacer"></span>
+
+                            <!-- Add -->
+                            <button mat-flat-button color="primary" type="submit" *ngIf="!userId" (click)="create()"
+                                [libDisplayAuthorizePolicy]="policies.USER_ADD">
+                                Save
+                            </button>
+
+                            <!-- Update -->
+                            <button mat-flat-button color="primary" type="submit" *ngIf="userId" (click)="save()"
+                                [libDisplayAuthorizePolicy]="policies.USER_UPDATE">
+                                Save
+                            </button>
+
+                            <!-- Close -->
+                            <button mat-stroked-button type="button" (click)="cancel()">
+                                Close
+                            </button>
+                        </div>
+                    </mat-card-actions>
+                </form>
+            </mat-card>
+        </div>
+    </div>
+</div>

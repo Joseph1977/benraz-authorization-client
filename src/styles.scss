@@ -1,0 +1,205 @@
+@use '~@angular/material' as mat;
+@import "~material-icons/iconfont/material-icons.css";
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "theme.scss";
+
+/* Layout */
+html,
+body {
+    height: 100%;
+    background-color: #f5f7fa;
+    font-family: "Work Sans", sans-serif;
+}
+
+.mat-toolbar {
+    background: #fff;
+    color: mat.get-color-from-palette($app-primary, 700);
+
+    .mat-toolbar-row {
+        height: 80px;
+        border-bottom: 1px solid #dbdbdb;
+        box-shadow: 1px 2px 5px 0 rgba(0, 0, 0, 0.09);
+    }
+}
+
+/* Dialog */
+.mat-dialog-container {
+    font-size: 14px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+/* Blackdrop */
+.scroll-blackdrop {
+    background: rgba(0, 0, 0, 0.32);
+}
+
+.scroll-blackdrop + .cdk-global-overlay-wrapper {
+    display: flex;
+    position: absolute;
+    z-index: 1000;
+    overflow: auto;
+    pointer-events: auto;
+}
+
+.with-spacer {
+    display: flex;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+a {
+    color: mat.get-color-from-palette($app-primary, 500);
+}
+
+a:hover {
+    color: mat.get-color-from-palette($app-primary, 700);
+}
+
+/* Buttons */
+.mat-raised-button.primary {
+    background-color: mat.get-color-from-palette($app-primary, 900);
+    color: #fff;
+    border-radius: 30px;
+}
+
+.mat-raised-button.primary:hover {
+    background-color: mat.get-color-from-palette($app-primary, 600);
+}
+
+/* Menu */
+.main-menu.mat-menu-panel {
+    border-radius: 0 !important;
+    position: relative;
+    left: 16px;
+    top: 20px;
+    box-shadow: 0 4px 4px -1px rgba(0, 0, 0, 0.2),
+        0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 4px 10px 0 rgba(0, 0, 0, 0.12);
+    border-top: rgba(255, 255, 255, 0.25) solid 1px;
+}
+
+.mat-divider {
+    border-top-color: rgba(0, 0, 0, 0.12);
+}
+
+.mat-menu-item,
+.mat-menu-item .mat-icon-no-color {
+    color: mat.get-color-from-palette($app-primary, 700);
+}
+
+/* Actions */
+.mat-card-actions {
+    margin-bottom: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.mat-card-actions-inner {
+    display: flex;
+}
+
+.mat-dialog-actions {
+    margin-bottom: -12px !important;
+}
+
+.mat-card-actions button,
+.mat-dialog-actions button {
+    margin-left: 8px;
+}
+
+.mat-card-actions button:first-child,
+.mat-dialog-actions button:first-child {
+    margin-left: 0px;
+}
+
+/* Cards */
+.mat-card {
+    margin-bottom: 24px;
+}
+
+h1,
+h2,
+h3,
+h4,
+.h1,
+.h2,
+.h3,
+.h4,
+.mat-card-title-group,
+.mat-card-title,
+.mat-card-subtitle {
+    color: mat.get-color-from-palette($app-primary, 700);
+}
+
+h3 {
+    font-size: 16px;
+}
+
+h4 {
+    font-size: 14px;
+}
+
+.mat-card-title {
+    font-size: 20px;
+}
+
+.mat-card-subtitle {
+    font-size: 18px;
+}
+
+.mat-card-title-group .mat-icon-button {
+    margin-top: -10px;
+    margin-right: -10px;
+}
+
+.fixed-height .mat-card-content {
+    height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.mat-mini-fab {
+    margin-bottom: 14px !important;
+}
+
+/* Tables */
+td.mat-cell,
+td.mat-footer-cell,
+th.mat-header-cell {
+    padding-left: 12px !important;
+}
+
+td.mat-cell:first-of-type,
+td.mat-footer-cell:first-of-type,
+th.mat-header-cell:first-of-type {
+    padding-left: 24px !important;
+}
+
+/* Profile */
+.profile {
+    font-size: 16px;
+    margin-left: 4px;
+    margin-right: 12px;
+}
+
+/* Disabled */
+.disabled {
+    opacity: 0.7 !important;
+    pointer-events: none;
+}
+
+.mat-selection-list {
+    outline: none;
+}
+
+.mat-list-base .mat-list-item,
+.mat-list-base .mat-list-option {
+    font-size: 14px;
+    height: 32px !important;
+}
+
+.mat-tab-body-content {
+    overflow-x: hidden !important;
+}

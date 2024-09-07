@@ -1,0 +1,18 @@
+<div class="row">
+    <mat-form-field class="col-12">
+        <input matInput placeholder="Filter" (input)="onFilter($event.target.value)" />
+    </mat-form-field>
+</div>
+
+<mat-selection-list color="primary" [(ngModel)]="selectedRoleNames" (selectionChange)="onSelectionChange()">
+    <mat-list-option *ngFor="let role of sort(roles);" [value]="role.name" [hidden]="!isVisible(role)">
+        {{ role.name }}
+    </mat-list-option>
+</mat-selection-list>
+
+<div class="total">
+    <span flex="" class="spacer"></span>
+    <span>
+        Selected: {{ selectedRoles.length }}
+    </span>
+</div>

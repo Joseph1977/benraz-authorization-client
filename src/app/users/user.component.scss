@@ -1,0 +1,12 @@
+button.mat-menu-item {
+    display: flex;
+    align-items: center;
+    pointer-events: unset;
+}
+
+button.mat-menu-item .mat-icon {
+    font-size: 18px;
+    margin-left: 16px;
+    margin-right: 0;
+    color: #333;
+}
