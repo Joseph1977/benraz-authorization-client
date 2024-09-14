@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
-import { AuthService, User, UserService } from '@josephbenraz/ngx-authorization';
+import { AuthService, User, UserService } from '@josephbenraz/npm-authorization';
 import { NotificationService } from '../notification/notification.service';
 import { Policies } from '../shared.model';
 
@@ -11,14 +11,14 @@ import { Policies } from '../shared.model';
 })
 export class LayoutComponent implements OnInit {
     public policies = Policies;
-    public user: User;
-
+    public user: User = new User();
     constructor(
         private userService: UserService,
         private authService: AuthService,
         private notificationService: NotificationService,
         public location: Location,
-        private router: Router) { }
+        private router: Router
+    ) { }
 
     ngOnInit() {
         this.user = this.userService.getUser();

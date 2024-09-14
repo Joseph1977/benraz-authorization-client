@@ -33,12 +33,12 @@ export class UserComponent implements OnInit {
     private isUserRolesLoading = false;
     private isUserClaimsLoading = false;
 
-    public userId: string;
-    public user: User;
+    public userId: string = '';
+    public user: User = {} as User;
     public form: FormGroup;
     public rolesFormArray: FormArray;
     public claimsFormArray: FormArray;
-    public isEmailVisible: boolean;
+    public isEmailVisible: boolean = false;
     public roles: Role[] = [];
     public userRoles: Role[] = [];
     public claims: Claim[] = [];
@@ -46,9 +46,8 @@ export class UserComponent implements OnInit {
 
     private retrievedUserRoles: string[] = [];
     private retrievedUserClaims: UserClaim[] = [];
-
     public get isSsoOnly(): boolean {
-        return this.form.get('isSsoOnly').value;
+        return this.form.get('isSsoOnly')?.value ?? false;
     }
 
     constructor(
@@ -79,7 +78,7 @@ export class UserComponent implements OnInit {
         this.reloadRoles();
         this.reloadClaims();
 
-        this.userId = this.route.snapshot.params.id;
+        this.userId = this.route.snapshot.params['id'];
         if (this.userId) {
             this.reloadUser();
         } else {
@@ -97,9 +96,8 @@ export class UserComponent implements OnInit {
 
         this.updateValidators();
         this.validateAllFormFields(this.form);
-
-        if (!this.isSsoOnly && this.form.get('password').value !== this.form.get('repeatPassword').value) {
-            this.form.get('repeatPassword').setErrors({ passwords: 'Passwords do not match' });
+        if (!this.isSsoOnly && this.form.get('password')?.value !== this.form.get('repeatPassword')?.value) {
+            this.form.get('repeatPassword')?.setErrors({ passwords: 'Passwords do not match' });
         }
 
         if (!this.form.valid) {
@@ -109,7 +107,7 @@ export class UserComponent implements OnInit {
 
         const user = this.form.value as User;
         if (this.isSsoOnly) {
-            user.password = null;
+            user.password = '';  // Changed from null to empty string
         }
 
         user.roles = this.userRoles.map(x => x.name);
@@ -374,23 +372,34 @@ export class UserComponent implements OnInit {
 
     private updateValidators() {
         const emailControl = this.form.get('email');
-        emailControl.clearValidators();
-        if (this.isEmailVisible) {
-            emailControl.setValidators([Validators.required, Validators.email]);
+        if (emailControl) {
+            emailControl.clearValidators();
+            if (this.isEmailVisible) {
+                emailControl.setValidators([Validators.required, Validators.email]);
+            }
         }
 
-        this.form.get('password').clearValidators();
-        this.form.get('repeatPassword').clearValidators();
-        if (!this.userId && !this.isSsoOnly) {
-            this.form.get('password').setValidators([Validators.required, Validators.minLength(6)]);
-            this.form.get('repeatPassword').setValidators(Validators.required);
+        const passwordControl = this.form.get('password');
+        const repeatPasswordControl = this.form.get('repeatPassword');
+
+        if (passwordControl && repeatPasswordControl) {
+            passwordControl.clearValidators();
+            repeatPasswordControl.clearValidators();
+
+            if (!this.userId && !this.isSsoOnly) {
+                passwordControl.setValidators([Validators.required, Validators.minLength(6)]);
+                repeatPasswordControl.setValidators(Validators.required);
+            }
         }
     }
 
     private validateAllFormFields(formGroup: FormGroup) {
         formGroup.updateValueAndValidity();
         Object.keys(formGroup.controls).forEach(field => {
-            this.validateControl(formGroup.get(field));
+            const control = formGroup.get(field);
+            if (control) {
+                this.validateControl(control);
+            }
         });
     }
 

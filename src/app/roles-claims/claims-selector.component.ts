@@ -32,7 +32,7 @@ export class ClaimsSelectorComponent implements OnInit {
     @Output()
     selectedClaimsChange = new EventEmitter<Claim[]>();
 
-    filter: string;
+    filter: string = '';
 
     constructor() {
     }
@@ -40,7 +40,7 @@ export class ClaimsSelectorComponent implements OnInit {
     ngOnInit() {
     }
 
-    onFilter(filter) {
+    onFilter(filter: string) {
         this.filter = filter;
     }
 

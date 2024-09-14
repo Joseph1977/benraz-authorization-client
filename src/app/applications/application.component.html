@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-12 col-lg-6 offset-lg-3">
             <mat-card>
-                <mat-card-title>Application</mat-card-title>
+                <mat-card-title class="text-center">Application</mat-card-title>
 
                 <div class="d-flex justify-content-center" *ngIf="isLoading">
                     <mat-spinner diameter="50"></mat-spinner>
@@ -11,32 +11,32 @@
                 <form [formGroup]="form" [hidden]="isLoading">
                     <mat-card-content>
                         <div [libEditAuthorizePolicy]="policies.APPLICATION_UPDATE">
-                            <div class="row">
-                                <mat-form-field class="col-12">
+                            <div fxLayout="row wrap" fxLayoutGap="16px">
+                                <mat-form-field fxFlex="100%" appearance="outline" class="custom-form-field">
                                     <input matInput placeholder="Name" formControlName="name" />
                                 </mat-form-field>
 
-                                <mat-form-field class="col-12" *ngIf="applicationId">
+                                <mat-form-field fxFlex="100%" appearance="outline" class="custom-form-field" *ngIf="applicationId">
                                     <input matInput placeholder="Application id" formControlName="id" readonly />
                                 </mat-form-field>
 
-                                <mat-form-field class="col-12" *ngIf="applicationId">
+                                <mat-form-field fxFlex="100%" appearance="outline" class="custom-form-field" *ngIf="applicationId">
                                     <input matInput placeholder="Audience" formControlName="audience" readonly />
                                 </mat-form-field>
 
-                                <div class="col-12">
+                                <div fxFlex="100%">
                                     <mat-checkbox color="primary" formControlName="isAccessTokenCookieEnabled"
                                         (change)="changeIsAccessTokenCookieEnabled()">
                                         Enable access token cookie
                                     </mat-checkbox>
                                 </div>
 
-                                <mat-form-field class="col-12" *ngIf="isAccessTokenCookieEnabled">
+                                <mat-form-field fxFlex="100%" appearance="outline" class="custom-form-field" *ngIf="isAccessTokenCookieEnabled">
                                     <input matInput placeholder="Access token cookie name"
                                         formControlName="accessTokenCookieName" />
                                 </mat-form-field>
 
-                                <div class="col-12" *ngIf="isAccessTokenCookieEnabled">
+                                <div fxFlex="100%" *ngIf="isAccessTokenCookieEnabled">
                                     <mat-checkbox color="primary" formControlName="isAccessTokenFragmentDisabled">
                                         Disable access token URL fragment
                                     </mat-checkbox>
@@ -44,10 +44,10 @@
                             </div>
                             <div formArrayName="urls">
                                 <div *ngFor="let urlForm of urlsFormArray?.controls">
-                                    <div [formGroup]="urlForm" class="row">
-                                        <mat-form-field class="col-12">
-                                            <input matInput [placeholder]="urlForm.get('typeCode').value | urlType"
-                                                formControlName="url" />
+                                    <div [formGroup]="urlForm" fxLayout="row wrap" fxLayoutGap="16px">
+                                        <mat-form-field fxFlex="100%" appearance="outline" class="custom-form-field">
+                                            <mat-label>{{ urlForm.get('typeCode')?.value | urlType }}</mat-label>
+                                            <input matInput formControlName="url" />
                                         </mat-form-field>
                                     </div>
                                 </div>
@@ -58,8 +58,8 @@
                     <mat-card-content>
                         <mat-tab-group>
                             <mat-tab label="SSO connections">
-                                <div class="row" style="margin-top: 12px;">
-                                    <div class="col-12" style="display: flex;">
+                                <div fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="16px" style="margin-top: 12px;">
+                                    <div fxFlex="100%" style="display: flex;">
                                         <span flex class="spacer"></span>
                                         <button mat-mini-fab color="primary" matTooltip="Add SSO connection"
                                             [matMenuTriggerFor]="appMenu" [disabled]="availableProviders?.length === 0"
@@ -83,32 +83,32 @@
                                             {{ ssoConnectionForm.value.ssoProviderCode | ssoProvider }}
                                         </mat-expansion-panel-header>
                                         <ng-template matExpansionPanelContent>
-                                            <div [formGroup]="ssoConnectionForm" class="row"
+                                            <div [formGroup]="ssoConnectionForm" fxLayout="row wrap" fxLayoutGap="16px"
                                                 [libEditAuthorizePolicy]="policies.APPLICATION_UPDATE">
                                                 <div
                                                     *ngIf="ssoConnectionForm.value.ssoProviderCode !== ssoProviderCode.Internal">
-                                                    <mat-form-field class="col-12">
+                                                    <mat-form-field fxFlex="100%" appearance="outline" class="custom-form-field">
                                                         <input matInput placeholder="Authorization URL"
                                                             formControlName="authorizationUrl" />
                                                     </mat-form-field>
-                                                    <mat-form-field class="col-12">
+                                                    <mat-form-field fxFlex="100%" appearance="outline" class="custom-form-field">
                                                         <input matInput placeholder="Token URL"
                                                             formControlName="tokenUrl" />
                                                     </mat-form-field>
-                                                    <mat-form-field class="col-12">
+                                                    <mat-form-field fxFlex="100%" appearance="outline" class="custom-form-field">
                                                         <input matInput placeholder="Client id"
                                                             formControlName="clientId" />
                                                     </mat-form-field>
-                                                    <mat-form-field class="col-12">
+                                                    <mat-form-field fxFlex="100%" appearance="outline" class="custom-form-field">
                                                         <input matInput placeholder="Client secret"
                                                             formControlName="clientSecret" />
                                                     </mat-form-field>
-                                                    <mat-form-field class="col-12">
+                                                    <mat-form-field fxFlex="100%" appearance="outline" class="custom-form-field">
                                                         <input matInput placeholder="Scope" formControlName="scope" />
                                                     </mat-form-field>
                                                 </div>
 
-                                                <div class="col-12" style="display: flex;">
+                                                <div fxFlex="100%" style="display: flex;">
                                                     <mat-checkbox color="primary" formControlName="isEnabled">
                                                         Enabled
                                                     </mat-checkbox>
@@ -130,7 +130,7 @@
                     </mat-card-content>
 
                     <mat-card-actions>
-                        <div class="mat-card-actions-inner">
+                        <div class="mat-card-actions-inner" fxLayout="row" fxLayoutAlign="space-between center">
                             <!-- Delete -->
                             <button mat-flat-button color="warn" (click)="delete()" *ngIf="applicationId"
                                 [libDisplayAuthorizePolicy]="policies.APPLICATION_DELETE">

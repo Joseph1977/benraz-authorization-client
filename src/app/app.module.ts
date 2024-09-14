@@ -32,10 +32,10 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import {
     AuthInterceptorService,
     PolicyRegistration,
-    BenrazNgxAuthorizationModule, 
+    BenrazNgxAuthorizationModule,
     UserService
-} from '@josephbenraz/ngx-authorization';
-import { EnvironmentsService, EnvironmentsServiceConfig, InternalUrlsService, BenrazNgxCommonModule } from '@josephbenraz/ngx-common';
+} from '@josephbenraz/npm-authorization';
+import { EnvironmentsService, EnvironmentsServiceConfig, InternalUrlsService, BenrazNgxCommonModule } from '@josephbenraz/npm-common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
@@ -68,6 +68,7 @@ import { UsersComponent } from './users/users.component';
 import { UserComponent } from './users/user.component';
 import { UserStatusComponent } from './users/user-status.component';
 import { Claims, Policies } from './shared/shared.model';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
     imports: [
@@ -142,11 +143,12 @@ import { Claims, Policies } from './shared/shared.model';
                 PolicyRegistration.claimsPolicy(Policies.CLAIM_ADD, [Claims.CLAIM_ADD]),
                 PolicyRegistration.claimsPolicy(Policies.CLAIM_DELETE, [Claims.CLAIM_DELETE])
             ]
-          })
+        }),
     ],
     declarations: [
         YesNoPipe,
         AppComponent,
+        HeaderComponent,
         LayoutComponent,
         LoginComponent,
         DashboardComponent,
@@ -167,10 +169,6 @@ import { Claims, Policies } from './shared/shared.model';
         ClaimsComponent,
         ClaimComponent,
         ClaimsSelectorComponent,
-        NotificationComponent,
-        ConfirmationComponent
-    ],
-    entryComponents: [
         NotificationComponent,
         ConfirmationComponent
     ],
@@ -199,9 +197,9 @@ export class AppModule {
 
       switch (environmentName) {
           case 'qa':
-              return environment.qa.apiBaseUrl;
+              return environment.qa.apiBaseUrl ?? '';
           case 'sb':
-              return environment.sb.apiBaseUrl;
+              return environment.sb.apiBaseUrl ?? '';
           default:
               return environment.apiBaseUrl;
       }
@@ -213,11 +211,11 @@ export class AppModule {
 
       switch (environmentName) {
           case 'qa':
-              return environment.qa.authorization.endpoint;
+              return environment.qa.authorization.endpoint ?? '';
           case 'sb':
-              return environment.sb.authorization.endpoint;
+              return environment.sb.authorization.endpoint ?? '';
           default:
-              return environment.authorization.endpoint;
+              return environment.authorization.endpoint ?? '';
       }
   }
 }

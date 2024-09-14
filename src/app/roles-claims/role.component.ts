@@ -20,7 +20,7 @@ export class RoleComponent implements OnInit {
 
     public isLoading = false;
 
-    public roleId: string;
+    public roleId: string = '';
     public form: FormGroup;
     public claims: Claim[] = [];
     public roleClaims: RoleClaim[] = [];
@@ -42,7 +42,7 @@ export class RoleComponent implements OnInit {
     ngOnInit() {
         this.reloadClaims();
 
-        this.roleId = this.route.snapshot.params.id;
+        this.roleId = this.route.snapshot.params['id'];
         if (this.roleId) {
             this.reloadRole();
             this.reloadRoleClaims();
@@ -126,7 +126,10 @@ export class RoleComponent implements OnInit {
 
     private validateAllFormFields(formGroup: FormGroup) {
         Object.keys(formGroup.controls).forEach(field => {
-            this.validateControl(formGroup.get(field));
+            const control = formGroup.get(field);
+            if (control) {
+                this.validateControl(control);
+            }
         });
     }
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthService } from '@josephbenraz/ngx-authorization';
+import { AuthService } from '@josephbenraz/npm-authorization';
 
 @Component({
     selector: 'app-login',

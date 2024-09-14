@@ -1,19 +1,16 @@
-<mat-toolbar>
-    <mat-toolbar-row>
+<div class="row header-container justify-content-between">
+    <div class="col-auto px-0 header-logo">
         <a class="nav-link" href="/">
-            <img src="./assets/images/benraz-logo.png" height="35" class="d-inline-block align-top"
-                alt="benraz-logo">
+            <img [src]="'./assets/images/benraz-logo.png'" height="40" class="d-inline-block align-top" alt="Logo">
         </a>
-    </mat-toolbar-row>
-</mat-toolbar>
-
-<br />
+    </div>
+</div>
 
 <div class="container-fluid">
     <div class="row">
         <div class="col-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
             <mat-card>
-                <mat-card-title color="accent">
+                <mat-card-title color="accent" class="center-content">
                     <h2>Welcome to Authorization server</h2>
                     <img src="./assets/images/authorization-logo.png" height="250" class="d-inline-block align-top"
                         alt="authorization-logo">
@@ -24,9 +21,9 @@
                 </div>
 
                 <mat-card-content *ngIf="!isLoading">
-                    <button mat-raised-button class="primary" type="button" (click)="login()">
-                        LOGIN
-                    </button>
+                    <div class="col-12 d-flex justify-content-center pt-4">
+                      <button #btnNext mat-raised-button class="login-button" (click)="login()">LOGIN</button>
+                    </div>
                 </mat-card-content>
             </mat-card>
         </div>

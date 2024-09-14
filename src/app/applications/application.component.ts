@@ -18,7 +18,7 @@ export class ApplicationComponent implements OnInit {
     public isLoading = false;
 
     public form: FormGroup;
-    public applicationId: string;
+    public applicationId: string = '';
 
     public ssoProviderCodes: SsoProviderCode[];
     public openPanelIndexes: number[] = [];
@@ -39,7 +39,7 @@ export class ApplicationComponent implements OnInit {
     }
 
     public get isAccessTokenCookieEnabled(): boolean {
-        return this.form.get('isAccessTokenCookieEnabled').value;
+        return this.form.get('isAccessTokenCookieEnabled')?.value ?? false;
     }
 
     constructor(
@@ -60,7 +60,7 @@ export class ApplicationComponent implements OnInit {
 
     ngOnInit() {
         this.route.params.subscribe(x => {
-            this.applicationId = x.id;
+            this.applicationId = x['id'];
             if (this.applicationId) {
                 this.reloadApplication();
             } else {
@@ -105,14 +105,14 @@ export class ApplicationComponent implements OnInit {
 
     changeIsAccessTokenCookieEnabled() {
         if (!this.isAccessTokenCookieEnabled) {
-            this.form.get('isAccessTokenFragmentDisabled').setValue(false);
+            this.form.get('isAccessTokenFragmentDisabled')?.setValue(false);
         }
         this.updateValidators();
     }
 
     addSsoConnection(ssoProviderCode: SsoProviderCode) {
-        const form = this.createSsoConnectionForm(ssoProviderCode);
-        form.get('ssoProviderCode').setValue(ssoProviderCode);
+        const form = this.createSsoConnectionForm(ssoProviderCode) as FormGroup;
+        form.get('ssoProviderCode')?.setValue(ssoProviderCode);
 
         this.ssoConnectionsFormArray.push(form);
         this.sortSsoConnectionForms();
@@ -120,7 +120,11 @@ export class ApplicationComponent implements OnInit {
         this.openPanel(this.ssoConnectionsFormArray.controls.indexOf(form));
     }
 
-    removeSsoConnection(providerForm) {
+    removeSsoConnection(providerForm: FormGroup | undefined) {
+        if (!providerForm) {
+            return;
+        }
+
         const index = this.ssoConnectionsFormArray.controls.indexOf(providerForm);
         this.ssoConnectionsFormArray.removeAt(index);
 
@@ -171,7 +175,7 @@ export class ApplicationComponent implements OnInit {
     private saveApplication() {
         const application = this.form.value as Application;
         if (!application.isAccessTokenCookieEnabled) {
-            application.accessTokenCookieName = null;
+            application.accessTokenCookieName = '';
             application.isAccessTokenFragmentDisabled = false;
         }
 
@@ -209,7 +213,15 @@ export class ApplicationComponent implements OnInit {
 
         for (const ssoConnection of application.ssoConnections) {
             const ssoConnectionForm = this.createSsoConnectionForm(ssoConnection.ssoProviderCode);
-            ssoConnectionForm.reset(ssoConnection);
+            ssoConnectionForm.patchValue({
+                ssoProviderCode: ssoConnection.ssoProviderCode as unknown as string,
+                authorizationUrl: ssoConnection.authorizationUrl,
+                tokenUrl: ssoConnection.tokenUrl,
+                clientId: ssoConnection.clientId,
+                clientSecret: ssoConnection.clientSecret,
+                scope: ssoConnection.scope,
+                isEnabled: ssoConnection.isEnabled as unknown as string
+            });
 
             this.ssoConnectionsFormArray.push(ssoConnectionForm);
         }
@@ -217,7 +229,10 @@ export class ApplicationComponent implements OnInit {
 
         for (const url of application.urls.sort((x, y) => x.typeCode - y.typeCode)) {
             const urlForm = this.createUrlForm();
-            urlForm.reset(url);
+            urlForm.reset({
+                typeCode: url.typeCode as unknown as string,
+                url: url.url
+            });
 
             this.urlsFormArray.push(urlForm);
         }
@@ -271,16 +286,19 @@ export class ApplicationComponent implements OnInit {
     }
 
     private updateValidators() {
-        this.form.get('accessTokenCookieName').clearValidators();
+        this.form.get('accessTokenCookieName')?.clearValidators();
         if (this.isAccessTokenCookieEnabled) {
-            this.form.get('accessTokenCookieName').setValidators([Validators.required]);
+            this.form.get('accessTokenCookieName')?.setValidators([Validators.required]);
         }
     }
 
     private validateAllFormFields(formGroup: FormGroup) {
         formGroup.updateValueAndValidity();
         Object.keys(formGroup.controls).forEach(field => {
-            this.validateControl(formGroup.get(field));
+            const control = formGroup.get(field);
+            if (control) {
+                this.validateControl(control);
+            }
         });
     }
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { InternalUrlsService } from '@josephbenraz/ngx-common';
+import { InternalUrlsService } from '@josephbenraz/npm-common';
 import { EncodeUrlCodec } from '../shared/encode-url-codec';
 import { Page } from '../shared/shared.model';
 import { User, UsersQuery, UserClaim } from './users.model';
