@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
             <mat-card>
-                <mat-card-title>Role</mat-card-title>
+                <mat-card-title class="text-center">Role</mat-card-title>
 
                 <div class="d-flex justify-content-center" *ngIf="isLoading">
                     <mat-spinner diameter="50"></mat-spinner>
@@ -11,8 +11,8 @@
                 <mat-card-content *ngIf="!isLoading">
                     <form [formGroup]="form">
                         <div [libEditAuthorizePolicy]="policies.ROLE_UPDATE">
-                            <div class="row">
-                                <mat-form-field class="col-12">
+                            <div fxLayout="row wrap" fxLayoutGap="16px">
+                                <mat-form-field fxFlex="100%" appearance="outline" class="custom-form-field">
                                     <input matInput placeholder="Name" formControlName="name" />
                                 </mat-form-field>
                             </div>
@@ -26,7 +26,7 @@
                 </mat-card-content>
 
                 <mat-card-actions>
-                    <div class="mat-card-actions-inner">
+                    <div class="mat-card-actions-inner" fxLayout="row" fxLayoutAlign="space-between center">
                         <span flex class="spacer"></span>
 
                         <!-- Add -->

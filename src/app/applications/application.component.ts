@@ -120,7 +120,11 @@ export class ApplicationComponent implements OnInit {
         this.openPanel(this.ssoConnectionsFormArray.controls.indexOf(form));
     }
 
-    removeSsoConnection(providerForm: FormGroup) {
+    removeSsoConnection(providerForm: FormGroup | undefined) {
+        if (!providerForm) {
+            return;
+        }
+
         const index = this.ssoConnectionsFormArray.controls.indexOf(providerForm);
         this.ssoConnectionsFormArray.removeAt(index);
 

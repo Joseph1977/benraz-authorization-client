@@ -1,4 +1,5 @@
 @use '@angular/material' as mat;
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
 @import 'theme';
 @import 'colors';
 
@@ -276,3 +277,85 @@ th.mat-mdc-header-cell:first-of-type {
         }
     }
 }
+
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.mat-form-field {
+    margin-bottom: 1rem;
+}
+
+table {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.mat-header-cell, .mat-cell {
+    padding: 0.75rem;
+}
+
+.mat-header-cell {
+    font-weight: bold;
+}
+
+.mat-mini-fab {
+    margin-left: 1rem;
+}
+
+
+
+.mat-form-field-wrapper {
+    padding: 0;
+    border: 2px solid transparent;
+
+    .mat-form-field-flex {
+      margin: 0;
+      padding: 0 1rem !important;
+      background-color: $white !important;
+      border-radius: 12px !important;
+    }
+
+    .mat-form-field-outline-thick {
+      color: transparent;
+    }
+
+    .mat-form-field-outline {
+      top: 0 !important;
+
+      .mat-form-field-outline-start {
+        border-radius: 12px 0 0 12px;
+        min-width: 12px;
+      }
+
+      .mat-form-field-outline-end {
+        border-radius: 0 12px 12px 0;
+      }
+    }
+
+    .mat-form-field-prefix {
+      top: 0.3rem !important;
+      padding-right: 1rem;
+
+      .mat-icon {
+        color: $gray !important;
+      }
+    }
+
+    .mat-form-field-infix {
+      border-top: 0;
+      line-height: 1.5;
+
+      .mat-input-element {
+        color: $gray !important;
+      }
+    }
+  }
+
+  .custom-form-field {
+    width: 100%;
+  }

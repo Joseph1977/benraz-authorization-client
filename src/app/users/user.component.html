@@ -2,7 +2,6 @@
     <div class="row">
         <div class="col-12 col-lg-6 offset-lg-3">
             <mat-card>
-
                 <mat-card-title-group>
                     <mat-card-title>User</mat-card-title>
                     <span *ngIf="user" style="font-size: 15px;">
@@ -53,66 +52,62 @@
 
                 <form [formGroup]="form" [hidden]="isLoading">
                     <mat-card-content>
-                        <div>
-                            <div class="row">
-                                <mat-form-field class="col-12">
-                                    <input matInput placeholder="Full name" formControlName="fullName" maxlength="500"
-                                        [readonly]="userId" />
-                                </mat-form-field>
+                        <div fxLayout="row wrap" fxLayoutGap="16px">
+                            <mat-form-field fxFlex="100%" appearance="outline" class="custom-form-field">
+                                <input matInput placeholder="Full name" formControlName="fullName" maxlength="500"
+                                    [readonly]="userId" />
+                            </mat-form-field>
 
-                                <mat-form-field class="col-12">
-                                    <input matInput type="email" placeholder="Email" formControlName="email"
-                                        [readonly]="userId" />
-                                </mat-form-field>
+                            <mat-form-field fxFlex="100%" appearance="outline" class="custom-form-field">
+                                <input matInput type="email" placeholder="Email" formControlName="email"
+                                    [readonly]="userId" />
+                            </mat-form-field>
 
-                                <mat-form-field class="col-12">
-                                    <input matInput placeholder="Phone number" formControlName="phoneNumber"
-                                        [readonly]="userId" />
-                                </mat-form-field>
+                            <mat-form-field fxFlex="100%" appearance="outline" class="custom-form-field">
+                                <input matInput placeholder="Phone number" formControlName="phoneNumber"
+                                    [readonly]="userId" />
+                            </mat-form-field>
 
-                                <div class="col-12">
-                                    <mat-checkbox color="primary" formControlName="isSsoOnly" [disabled]="userId">
-                                        Only SSO login
-                                    </mat-checkbox>
-                                </div>
+                            <div fxFlex="100%">
+                                <mat-checkbox color="primary" formControlName="isSsoOnly" [disabled]="userId">
+                                    Only SSO login
+                                </mat-checkbox>
+                            </div>
 
-                                <mat-form-field class="col-12" *ngIf="!userId && !isSsoOnly">
-                                    <input matInput type="password" placeholder="Password (Min 6 symbols)"
-                                        formControlName="password" />
-                                </mat-form-field>
+                            <mat-form-field fxFlex="100%" appearance="outline" class="custom-form-field" *ngIf="!userId && !isSsoOnly">
+                                <input matInput type="password" placeholder="Password (Min 6 symbols)"
+                                    formControlName="password" />
+                            </mat-form-field>
 
-                                <mat-form-field class="col-12" *ngIf="!userId && !isSsoOnly">
-                                    <input matInput type="password" placeholder="Repeat password"
-                                        formControlName="repeatPassword" />
-                                </mat-form-field>
+                            <mat-form-field fxFlex="100%" appearance="outline" class="custom-form-field" *ngIf="!userId && !isSsoOnly">
+                                <input matInput type="password" placeholder="Repeat password"
+                                    formControlName="repeatPassword" />
+                            </mat-form-field>
 
-                                <div class="col-12 with-spacer" *ngIf="userId && !isSsoOnly">
-                                    <span flex class="spacer"></span>
-                                    <button mat-stroked-button (click)="resetPassword()">
-                                        Reset password
-                                    </button>
-                                </div>
+                            <div fxFlex="100%" class="with-spacer" *ngIf="userId && !isSsoOnly">
+                                <span flex class="spacer"></span>
+                                <button mat-stroked-button (click)="resetPassword()">
+                                    Reset password
+                                </button>
                             </div>
                         </div>
                         <mat-card-title>User access control</mat-card-title>
-                        <div>
-                            <div class="row">
-                                <div class="col-9" style="margin-bottom: 0.5rem;" *ngIf="userId && user != null" [ngClass]="{
-                                    'text-danger' : user.lockoutEnd,
-                                    'text-success' : !user.lockoutEnd
-                                }">
-                                    <span>{{user.lockoutEnd === null ? 'Unlocked ' : 'Locked'}} </span>
-                                </div>
-                                <div class="col-12" style="margin-bottom: 0.5rem;" *ngIf="userId && user != null">
-                                    Failed login attempts: {{user.accessFailedCount}}
-                                </div>
-                                <div class="col-12" style="margin-bottom: 0.5rem;" *ngIf="userId && user != null && user.lockoutEnd">
-                                    Automatic unlock time: {{user.lockoutEnd | date: 'MM/dd/yy hh:mm a'}}
-                                </div>
-                                <div class="col-12 with-spacer" *libIfAuthorizePolicy="policies.USER_UNLOCK">
-                                    <span flex class="spacer"></span>
-                                    <button mat-stroked-button (click)="unlock()" [disabled]="user?.lockoutEnd === null">Unlock user</button>
-                                </div>
+                        <div fxLayout="row wrap" fxLayoutGap="16px">
+                            <div fxFlex="100%" style="margin-bottom: 0.5rem;" *ngIf="userId && user != null" [ngClass]="{
+                                'text-danger' : user.lockoutEnd,
+                                'text-success' : !user.lockoutEnd
+                            }">
+                                <span>{{user.lockoutEnd === null ? 'Unlocked ' : 'Locked'}} </span>
+                            </div>
+                            <div fxFlex="100%" style="margin-bottom: 0.5rem;" *ngIf="userId && user != null">
+                                Failed login attempts: {{user.accessFailedCount}}
+                            </div>
+                            <div fxFlex="100%" style="margin-bottom: 0.5rem;" *ngIf="userId && user != null && user.lockoutEnd">
+                                Automatic unlock time: {{user.lockoutEnd | date: 'MM/dd/yy hh:mm a'}}
+                            </div>
+                            <div fxFlex="100%" class="with-spacer" *libIfAuthorizePolicy="policies.USER_UNLOCK">
+                                <span flex class="spacer"></span>
+                                <button mat-stroked-button (click)="unlock()" [disabled]="user?.lockoutEnd === null">Unlock user</button>
                             </div>
                         </div>
                     </mat-card-content>
@@ -134,7 +129,7 @@
                     </div>
 
                     <mat-card-actions>
-                        <div class="mat-card-actions-inner">
+                        <div class="mat-card-actions-inner" fxLayout="row" fxLayoutAlign="space-between center">
                             <!-- Delete -->
                             <button mat-flat-button color="warn" (click)="delete()"
                                 [libDisplayAuthorizePolicy]="policies.USER_DELETE">
