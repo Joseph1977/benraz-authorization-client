@@ -169,8 +169,5 @@
       }
     }
   },
-  "defaultProject": "authorization",
-  "cli": {
-    "analytics": false
-  }
+  "defaultProject": "authorization"
 }
