@@ -7,6 +7,8 @@ export class UrlTypePipe implements PipeTransform {
         switch (value) {
             case ApplicationUrlTypeCode.Callback:
                 return 'Callback URL (URL for receive a redirect with access token)';
+            default:
+                return 'Unknown URL Type';
         }
     }
 }

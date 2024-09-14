@@ -1,8 +1,8 @@
 export class Page<T> {
-    items: T[];
-    pageNo: number;
-    pageSize: number;
-    totalCount: number;
+    items: T[] = [];
+    pageNo: number = 0;
+    pageSize: number = 0;
+    totalCount: number = 0;
 }
 
 export class Policies {

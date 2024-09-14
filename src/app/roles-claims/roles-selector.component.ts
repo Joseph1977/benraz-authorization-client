@@ -32,7 +32,7 @@ export class RolesSelectorComponent implements OnInit {
     @Output()
     selectedRolesChange = new EventEmitter<Role[]>();
 
-    filter: string;
+    filter: string = '';
 
     constructor() {
     }
@@ -40,7 +40,7 @@ export class RolesSelectorComponent implements OnInit {
     ngOnInit() {
     }
 
-    onFilter(filter) {
+    onFilter(filter: string) {
         this.filter = filter;
     }
 

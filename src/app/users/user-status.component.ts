@@ -7,7 +7,7 @@ import { UserStatusCode } from './users.model';
 })
 export class UserStatusComponent {
     @Input()
-    statusCode: UserStatusCode;
+    statusCode: UserStatusCode = UserStatusCode.Active;
 
     private mappings = [
         { statusCode: null, icon: '\u25CB', class: 'text-warning', text: 'Unknown' },

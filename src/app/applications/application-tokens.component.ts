@@ -19,9 +19,9 @@ import { ViewApplicationTokenComponent } from './view-application-token.componen
 })
 export class ApplicationTokensComponent implements OnInit {
     @ViewChild(MatSort, { static: true })
-    public sort: MatSort;
+    public sort: MatSort = new MatSort();
 
-    public applicationId: string;
+    public applicationId: string = '';
 
     public policies = Policies;
 
@@ -36,7 +36,7 @@ export class ApplicationTokensComponent implements OnInit {
 
     public isLoading = false;
 
-    public filter: string;
+    public filter: string = '';
 
     constructor(
         public location: Location,
@@ -51,7 +51,7 @@ export class ApplicationTokensComponent implements OnInit {
         this.sort.active = 'name';
         this.sort.direction = 'asc';
 
-        this.applicationId = this.route.snapshot.params.id;
+        this.applicationId = this.route.snapshot.params['id'];
 
         this.reloadApplicationTokens();
     }
@@ -63,9 +63,8 @@ export class ApplicationTokensComponent implements OnInit {
     reload() {
         this.reloadApplicationTokens();
     }
-
     view(token: ApplicationToken) {
-        this.showToken(token, null);
+        this.showToken(token, '');
     }
 
     create() {
@@ -83,9 +82,8 @@ export class ApplicationTokensComponent implements OnInit {
                 if (!x) {
                     return;
                 }
-
                 this.reloadApplicationTokens();
-                this.showToken(null, x);
+                this.showToken(x, x.value);
             });
     }
 

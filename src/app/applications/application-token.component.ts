@@ -55,7 +55,7 @@ export class ApplicationTokenComponent implements OnInit {
         this.customFieldsFormArray.push(this.createCustomFieldForm());
     }
 
-    removeCustomField(customFieldForm) {
+    removeCustomField(customFieldForm: FormGroup) {
         this.customFieldsFormArray.removeAt(this.customFieldsFormArray.controls.indexOf(customFieldForm));
     }
 

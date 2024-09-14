@@ -15,7 +15,7 @@ import { Role } from './roles.model';
 })
 export class RolesComponent implements OnInit {
     @ViewChild(MatSort, { static: true })
-    public sort: MatSort;
+    public sort: MatSort = new MatSort();
 
     public policies = Policies;
 

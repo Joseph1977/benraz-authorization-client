@@ -25,7 +25,10 @@ export class ValidationService {
 
     private validateFormGroup(formGroup: FormGroup) {
         Object.keys(formGroup.controls).forEach(field => {
-            this.validateControl(formGroup.get(field));
+            const control = formGroup.get(field);
+            if (control) {
+                this.validateControl(control);
+            }
         });
     }
 }

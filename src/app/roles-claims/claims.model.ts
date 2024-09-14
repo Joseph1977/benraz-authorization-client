@@ -1,5 +1,5 @@
 export class Claim {
-    id: string;
-    type: string;
-    value: string;
+    id: string = '';
+    type: string = '';
+    value: string = '';
 }

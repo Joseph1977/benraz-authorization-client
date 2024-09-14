@@ -17,7 +17,7 @@ import { ClaimComponent } from './claim.component';
 })
 export class ClaimsComponent implements OnInit {
     @ViewChild(MatSort, { static: true })
-    public sort: MatSort;
+    public sort: MatSort = new MatSort();
 
     public policies = Policies;
 

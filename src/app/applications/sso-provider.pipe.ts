@@ -4,6 +4,10 @@ import { SsoProviderCode } from './applications.model';
 @Pipe({ name: 'ssoProvider' })
 export class SsoProviderPipe implements PipeTransform {
     transform(value?: SsoProviderCode): string {
+        if (!value) {
+            return '';
+        }
+
         switch (value) {
             case SsoProviderCode.Internal:
                 return 'Internal';
@@ -14,5 +18,7 @@ export class SsoProviderPipe implements PipeTransform {
             case SsoProviderCode.Google:
                 return 'Google';
         }
+
+        return '';
     }
 }

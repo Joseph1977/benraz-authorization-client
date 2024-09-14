@@ -32,7 +32,10 @@ export class ClaimComponent {
 
     private validateAllFormFields(formGroup: FormGroup) {
         Object.keys(formGroup.controls).forEach(field => {
-            formGroup.get(field).markAsTouched({ onlySelf: true });
+            const control = formGroup.get(field);
+            if (control) {
+                control.markAsTouched({ onlySelf: true });
+            }
         });
     }
 }

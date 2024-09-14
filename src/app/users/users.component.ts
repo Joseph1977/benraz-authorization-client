@@ -15,10 +15,10 @@ import { MatPaginator } from '@angular/material/paginator';
 })
 export class UsersComponent implements OnInit {
     @ViewChild(MatSort, { static: true })
-    public sort: MatSort;
+    public sort: MatSort | undefined;
 
     @ViewChild(MatPaginator, { static: true })
-    public paginator: MatPaginator;
+    public paginator: MatPaginator | undefined;
 
     public policies = Policies;
 
@@ -34,7 +34,7 @@ export class UsersComponent implements OnInit {
 
     public isLoading = false;
 
-    public filter: string;
+    public filter: string | undefined;
 
     public emptyFullNameMessage: string = '<Full name is missed>';
 
@@ -47,9 +47,13 @@ export class UsersComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.sort.active = 'fullName';
-        this.sort.direction = 'asc';
-        this.paginator.pageSize = 50;
+        if (this.sort) {
+            this.sort.active = 'fullName';
+            this.sort.direction = 'asc';
+        }
+        if (this.paginator) {
+            this.paginator.pageSize = 50;
+        }
 
         this.reloadUsers();
     }
@@ -79,13 +83,13 @@ export class UsersComponent implements OnInit {
 
     private reloadUsers() {
         this.isLoading = true;
-
-        const query = {
-            sortBy: this.getSortingParameter(this.sort.active),
-            sortDesc: this.sort.direction === 'desc',
-            pageNo: this.paginator.pageIndex + 1,
-            pageSize: this.paginator.pageSize
-        } as UsersQuery;
+        const query: UsersQuery = {
+            sortBy: this.getSortingParameter(this.sort?.active ?? 'fullName'),
+            sortDesc: this.sort?.direction === 'desc',
+            pageNo: (this.paginator?.pageIndex ?? 0) + 1,
+            pageSize: this.paginator?.pageSize ?? 50,
+            filter: ''
+        };
 
         if (this.filter) {
             query.filter = this.filter;
@@ -96,8 +100,10 @@ export class UsersComponent implements OnInit {
             .subscribe(
                 x => {
                     this.dataSource.data = x.items;
-                    this.paginator.pageIndex = x.pageNo - 1;
-                    this.paginator.length = x.totalCount;
+                    if (this.paginator) {
+                        this.paginator.pageIndex = x.pageNo - 1;
+                        this.paginator.length = x.totalCount;
+                    }
                 },
                 error => this.notificationService.error(error))
             .add(() => this.isLoading = false);

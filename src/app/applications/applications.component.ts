@@ -14,10 +14,10 @@ import { ApplicationsService } from './applications.service';
 })
 export class ApplicationsComponent implements OnInit {
     @ViewChild(MatSort, { static: true })
-    public sort: MatSort;
+    public sort: MatSort = new MatSort();
 
     @ViewChild(MatPaginator, { static: true })
-    public paginator: MatPaginator;
+    public paginator: MatPaginator | undefined;
 
     public policies = Policies;
 
@@ -34,7 +34,7 @@ export class ApplicationsComponent implements OnInit {
 
     public isLoading = false;
 
-    public filter: string;
+    public filter: string = '';
     public sorting = { active: 'createTimeUtc', direction: 'desc' };
     public pageSize = 50;
     public pageIndex = 0;
@@ -55,7 +55,7 @@ export class ApplicationsComponent implements OnInit {
         this.reloadApplications();
     }
 
-    onSort(value) {
+    onSort(value: { active: string, direction: string }) {
         this.sorting = value;
         this.reloadApplications();
     }
@@ -70,8 +70,8 @@ export class ApplicationsComponent implements OnInit {
         const query = {
             sortBy: this.getSortingParameter(this.sorting.active),
             sortDesc: this.sorting.direction === 'desc',
-            pageNo: this.paginator.pageIndex + 1,
-            pageSize: this.paginator.pageSize || this.pageSize
+            pageNo: this.paginator?.pageIndex ? this.paginator.pageIndex + 1 : 1,
+            pageSize: this.paginator?.pageSize || this.pageSize
         } as ApplicationsQuery;
 
         if (this.filter) {
