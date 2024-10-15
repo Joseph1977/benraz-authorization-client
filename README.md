@@ -1,7 +1,6 @@
-# Authorization frontend
-
-Angular 12
-----------
+# Authorization frontend (Angular 12)
+--------------------------------------
+for more details: https://github.com/Joseph1977/Benraz-AuthorizationServer
 
 # build instruction
 1. npm cache clean --force 
