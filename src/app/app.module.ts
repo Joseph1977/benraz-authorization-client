@@ -142,7 +142,7 @@ import { Claims, Policies } from './shared/shared.model';
                 PolicyRegistration.claimsPolicy(Policies.CLAIM_ADD, [Claims.CLAIM_ADD]),
                 PolicyRegistration.claimsPolicy(Policies.CLAIM_DELETE, [Claims.CLAIM_DELETE])
             ]
-          })
+        })
     ],
     declarations: [
         YesNoPipe,
@@ -167,10 +167,6 @@ import { Claims, Policies } from './shared/shared.model';
         ClaimsComponent,
         ClaimComponent,
         ClaimsSelectorComponent,
-        NotificationComponent,
-        ConfirmationComponent
-    ],
-    entryComponents: [
         NotificationComponent,
         ConfirmationComponent
     ],

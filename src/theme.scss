@@ -1,5 +1,5 @@
-@use '~@angular/material' as mat;
-@import '~@angular/material/theming';
+@use '@angular/material' as mat;
+@import '@angular/material/theming';
 @include mat.core();
 
 $app-indigo: (
@@ -36,8 +36,10 @@ $app-indigo: (
 );
 
 $app-red: (
+    100: #ffcdd2,
     700: #dc3546,
     contrast: (
+        100: $black-87-opacity,
         700: white
     )
 );
