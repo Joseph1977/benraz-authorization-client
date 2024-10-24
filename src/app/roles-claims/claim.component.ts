@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { UntypedFormBuilder, Validators, UntypedFormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { NotificationService } from '../shared/notification/notification.service';
@@ -6,6 +6,7 @@ import { NotificationService } from '../shared/notification/notification.service
 @Component({
     selector: 'app-claim',
     templateUrl: './claim.component.html',
+encapsulation: ViewEncapsulation.None
 })
 export class ClaimComponent {
     form: UntypedFormGroup;

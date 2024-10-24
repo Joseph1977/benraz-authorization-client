@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
-import { AuthService, User, UserService } from '@josephbenraz/ngx-authorization';
+import { AuthService, User, UserService } from '@josephbenraz/npm-authorization';
 import { NotificationService } from '../notification/notification.service';
 import { Policies } from '../shared.model';
 
 @Component({
     selector: 'app-layout',
-    templateUrl: './layout.component.html'
+    templateUrl: './layout.component.html',
+    encapsulation: ViewEncapsulation.None
 })
 export class LayoutComponent implements OnInit {
     public policies = Policies;

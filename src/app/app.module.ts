@@ -34,8 +34,8 @@ import {
     PolicyRegistration,
     BenrazNgxAuthorizationModule, 
     UserService
-} from '@josephbenraz/ngx-authorization';
-import { EnvironmentsService, EnvironmentsServiceConfig, InternalUrlsService, BenrazNgxCommonModule } from '@josephbenraz/ngx-common';
+} from '@josephbenraz/npm-authorization';
+import { EnvironmentsService, EnvironmentsServiceConfig, InternalUrlsService, BenrazNgxCommonModule } from '@josephbenraz/npm-common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';

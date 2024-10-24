@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, UntypedFormArray, UntypedFormControl, AbstractControl } from '@angular/forms';
 import { of } from 'rxjs';
@@ -13,7 +13,8 @@ import { ClaimsService } from './claims.service';
 
 @Component({
     selector: 'app-role',
-    templateUrl: './role.component.html'
+    templateUrl: './role.component.html',
+encapsulation: ViewEncapsulation.None
 })
 export class RoleComponent implements OnInit {
     public policies = Policies;

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
@@ -10,7 +10,8 @@ import { ApplicationsService } from './applications.service';
 
 @Component({
     selector: 'app-applications',
-    templateUrl: './applications.component.html'
+    templateUrl: './applications.component.html',
+    encapsulation: ViewEncapsulation.None
 })
 export class ApplicationsComponent implements OnInit {
     @ViewChild(MatSort, { static: true })

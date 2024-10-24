@@ -1,10 +1,11 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApplicationToken } from './applications.model';
 
 @Component({
     selector: 'app-view-application-token',
     templateUrl: './view-application-token.component.html',
+    encapsulation: ViewEncapsulation.None
 })
 export class ViewApplicationTokenComponent {
     applicationToken: ApplicationToken;

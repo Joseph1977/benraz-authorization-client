@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, UntypedFormArray, UntypedFormControl, AbstractControl } from '@angular/forms';
 import { of } from 'rxjs';
@@ -16,7 +16,8 @@ import { User, UserStatusCode, UserClaim } from './users.model';
 @Component({
     selector: 'app-user',
     templateUrl: './user.component.html',
-    styleUrls: ['./user.component.scss']
+    styleUrls: ['./user.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class UserComponent implements OnInit {
     public policies = Policies;

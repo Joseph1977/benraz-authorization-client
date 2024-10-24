@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, UntypedFormArray, UntypedFormControl, AbstractControl } from '@angular/forms';
 import { Policies } from '../shared/shared.model';
@@ -10,7 +10,8 @@ import { ApplicationsService } from './applications.service';
 @Component({
     selector: 'app-application',
     templateUrl: './application.component.html',
-    styleUrls: ['application.component.scss']
+    styleUrls: ['application.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class ApplicationComponent implements OnInit {
     public policies = Policies;

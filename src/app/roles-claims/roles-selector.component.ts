@@ -1,10 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { Role } from './roles.model';
 
 @Component({
     selector: 'app-roles-selector',
     templateUrl: './roles-selector.component.html',
-    styleUrls: ['./roles-selector.component.scss']
+    styleUrls: ['./roles-selector.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class RolesSelectorComponent implements OnInit {
     @Input()

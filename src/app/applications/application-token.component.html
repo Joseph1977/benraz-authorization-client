@@ -4,10 +4,12 @@
     <form [formGroup]="form">
         <div class="row">
             <mat-form-field class="col-12">
+			<mat-label>Name</mat-label>
                 <input matInput placeholder="Name" formControlName="name" />
             </mat-form-field>
 
             <mat-form-field class="col-12">
+			 <mat-label>Expiration time</mat-label>
                 <input matInput [matDatepicker]="expirationDatepicker" placeholder="Expiration time"
                     formControlName="expirationTimeUtc" [min]="minExpirationTime">
                 <mat-datepicker-toggle matSuffix [for]="expirationDatepicker"></mat-datepicker-toggle>
@@ -33,10 +35,12 @@
             <div *ngFor="let customFieldForm of customFieldsFormArray?.controls">
                 <div class="row" [formGroup]="customFieldForm">
                     <mat-form-field class="col-5">
+					<mat-label>Key</mat-label>
                         <input matInput placeholder="Key" formControlName="key" />
                     </mat-form-field>
 
                     <mat-form-field class="col-6">
+					<mat-label>Value</mat-label>
                         <input matInput placeholder="Value" formControlName="value" />
                     </mat-form-field>
 
