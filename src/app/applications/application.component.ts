@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, FormArray, FormControl, AbstractControl } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, UntypedFormArray, UntypedFormControl, AbstractControl } from '@angular/forms';
 import { Policies } from '../shared/shared.model';
 import { NotificationService } from '../shared/notification/notification.service';
 import { ConfirmationService } from '../shared/confirmation/confimation.service';
@@ -17,7 +17,7 @@ export class ApplicationComponent implements OnInit {
 
     public isLoading = false;
 
-    public form: FormGroup;
+    public form: UntypedFormGroup;
     public applicationId: string;
 
     public ssoProviderCodes: SsoProviderCode[];
@@ -25,12 +25,12 @@ export class ApplicationComponent implements OnInit {
 
     public ssoProviderCode = SsoProviderCode;
 
-    public get ssoConnectionsFormArray(): FormArray {
-        return this.form.get('ssoConnections') as FormArray;
+    public get ssoConnectionsFormArray(): UntypedFormArray {
+        return this.form.get('ssoConnections') as UntypedFormArray;
     }
 
-    public get urlsFormArray(): FormArray {
-        return this.form.get('urls') as FormArray;
+    public get urlsFormArray(): UntypedFormArray {
+        return this.form.get('urls') as UntypedFormArray;
     }
 
     public get availableProviders() {
@@ -45,7 +45,7 @@ export class ApplicationComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private fb: FormBuilder,
+        private fb: UntypedFormBuilder,
         private applicationsService: ApplicationsService,
         private notificationService: NotificationService,
         private confirmationService: ConfirmationService) {
@@ -177,7 +177,7 @@ export class ApplicationComponent implements OnInit {
 
         application.ssoConnections = [];
         for (const ssoConnectionControl of this.ssoConnectionsFormArray.controls) {
-            const ssoConnectionForm = ssoConnectionControl as FormGroup;
+            const ssoConnectionForm = ssoConnectionControl as UntypedFormGroup;
             const ssoConnection = ssoConnectionForm.value as ApplicationSsoConnection;
 
             const clientSecretControl = ssoConnectionForm.get('clientSecret');
@@ -277,7 +277,7 @@ export class ApplicationComponent implements OnInit {
         }
     }
 
-    private validateAllFormFields(formGroup: FormGroup) {
+    private validateAllFormFields(formGroup: UntypedFormGroup) {
         formGroup.updateValueAndValidity();
         Object.keys(formGroup.controls).forEach(field => {
             this.validateControl(formGroup.get(field));
@@ -285,12 +285,12 @@ export class ApplicationComponent implements OnInit {
     }
 
     private validateControl(control: AbstractControl) {
-        if (control instanceof FormControl) {
+        if (control instanceof UntypedFormControl) {
             control.updateValueAndValidity();
             control.markAsTouched({ onlySelf: true });
-        } else if (control instanceof FormGroup) {
+        } else if (control instanceof UntypedFormGroup) {
             this.validateAllFormFields(control);
-        } else if (control instanceof FormArray) {
+        } else if (control instanceof UntypedFormArray) {
             control.controls.forEach(x => this.validateControl(x));
         }
     }

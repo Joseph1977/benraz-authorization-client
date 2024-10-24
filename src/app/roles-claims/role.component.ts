@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, FormArray, FormControl, AbstractControl } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, UntypedFormArray, UntypedFormControl, AbstractControl } from '@angular/forms';
 import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Policies } from '../shared/shared.model';
@@ -21,14 +21,14 @@ export class RoleComponent implements OnInit {
     public isLoading = false;
 
     public roleId: string;
-    public form: FormGroup;
+    public form: UntypedFormGroup;
     public claims: Claim[] = [];
     public roleClaims: RoleClaim[] = [];
 
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private fb: FormBuilder,
+        private fb: UntypedFormBuilder,
         private rolesService: RolesService,
         private claimsService: ClaimsService,
         private notificationService: NotificationService,
@@ -124,18 +124,18 @@ export class RoleComponent implements OnInit {
         this.form.reset(role);
     }
 
-    private validateAllFormFields(formGroup: FormGroup) {
+    private validateAllFormFields(formGroup: UntypedFormGroup) {
         Object.keys(formGroup.controls).forEach(field => {
             this.validateControl(formGroup.get(field));
         });
     }
 
     private validateControl(control: AbstractControl) {
-        if (control instanceof FormControl) {
+        if (control instanceof UntypedFormControl) {
             control.markAsTouched({ onlySelf: true });
-        } else if (control instanceof FormGroup) {
+        } else if (control instanceof UntypedFormGroup) {
             this.validateAllFormFields(control);
-        } else if (control instanceof FormArray) {
+        } else if (control instanceof UntypedFormArray) {
             control.controls.forEach(x => this.validateControl(x));
         }
     }

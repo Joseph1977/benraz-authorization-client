@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
+import { UntypedFormBuilder, Validators, UntypedFormGroup, UntypedFormArray } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { RolesService } from '../roles-claims/roles.service';
 import { ClaimsService } from '../roles-claims/claims.service';
@@ -17,9 +17,9 @@ import { ValidationService } from '../shared/validation.service';
 export class ApplicationTokenComponent implements OnInit {
     applicationId: string;
 
-    form: FormGroup;
-    public get customFieldsFormArray(): FormArray {
-        return this.form.get('customFields') as FormArray;
+    form: UntypedFormGroup;
+    public get customFieldsFormArray(): UntypedFormArray {
+        return this.form.get('customFields') as UntypedFormArray;
     }
 
     roles: Role[] = [];
@@ -30,7 +30,7 @@ export class ApplicationTokenComponent implements OnInit {
 
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
-        private fb: FormBuilder,
+        private fb: UntypedFormBuilder,
         private dialogRef: MatDialogRef<ApplicationTokenComponent>,
         private rolesService: RolesService,
         private claimsService: ClaimsService,
