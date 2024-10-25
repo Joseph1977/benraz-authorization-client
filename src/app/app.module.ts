@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
@@ -32,7 +32,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import {
     AuthInterceptorService,
     PolicyRegistration,
-    BenrazNgxAuthorizationModule, 
+    BenrazNgxAuthorizationModule,
     UserService
 } from '@josephbenraz/npm-authorization';
 import { EnvironmentsService, EnvironmentsServiceConfig, InternalUrlsService, BenrazNgxCommonModule } from '@josephbenraz/npm-common';
@@ -70,11 +70,39 @@ import { UserStatusComponent } from './users/user-status.component';
 import { Claims, Policies } from './shared/shared.model';
 
 @NgModule({
+    declarations: [
+        YesNoPipe,
+        AppComponent,
+        LayoutComponent,
+        LoginComponent,
+        DashboardComponent,
+        ApplicationsComponent,
+        ApplicationComponent,
+        ApplicationTokensComponent,
+        ApplicationTokenComponent,
+        ViewApplicationTokenComponent,
+        SsoProviderPipe,
+        UrlTypePipe,
+        UsersComponent,
+        UserComponent,
+        UserStatusComponent,
+        RolesClaimsComponent,
+        RolesComponent,
+        RoleComponent,
+        RolesSelectorComponent,
+        ClaimsComponent,
+        ClaimComponent,
+        ClaimsSelectorComponent,
+        NotificationComponent,
+        ConfirmationComponent
+    ],
+    bootstrap: [
+        AppComponent
+    ],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
         AppRoutingModule,
-        HttpClientModule,
         FormsModule,
         ReactiveFormsModule,
         MatButtonModule,
@@ -142,78 +170,51 @@ import { Claims, Policies } from './shared/shared.model';
                 PolicyRegistration.claimsPolicy(Policies.CLAIM_ADD, [Claims.CLAIM_ADD]),
                 PolicyRegistration.claimsPolicy(Policies.CLAIM_DELETE, [Claims.CLAIM_DELETE])
             ]
-        })
-    ],
-    declarations: [
-        YesNoPipe,
-        AppComponent,
-        LayoutComponent,
-        LoginComponent,
-        DashboardComponent,
-        ApplicationsComponent,
-        ApplicationComponent,
-        ApplicationTokensComponent,
-        ApplicationTokenComponent,
-        ViewApplicationTokenComponent,
-        SsoProviderPipe,
-        UrlTypePipe,
-        UsersComponent,
-        UserComponent,
-        UserStatusComponent,
-        RolesClaimsComponent,
-        RolesComponent,
-        RoleComponent,
-        RolesSelectorComponent,
-        ClaimsComponent,
-        ClaimComponent,
-        ClaimsSelectorComponent,
-        NotificationComponent,
-        ConfirmationComponent
-    ],
-    providers: [
-        InternalUrlsService,
-        UserService,
-        ApplicationsService,
-        UsersService,
-        RolesService,
-        ClaimsService,
-        DatePipe,
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: AuthInterceptorService,
-            multi: true
-        },
-    ],
-    bootstrap: [AppComponent]
+        })],
+        providers: [
+            InternalUrlsService,
+            UserService,
+            ApplicationsService,
+            UsersService,
+            RolesService,
+            ClaimsService,
+            DatePipe,
+            {
+                provide: HTTP_INTERCEPTORS,
+                useClass: AuthInterceptorService,
+                multi: true
+            },
+            provideHttpClient(withInterceptorsFromDi()),
+        ]
 })
 export class AppModule {
-  static companySubdomain = 'benraz';
+    static companySubdomain = 'benraz';
 
-  static getApiBaseUrl(): string {
-      const environmentsService = new EnvironmentsService({ companySubdomain: this.companySubdomain } as EnvironmentsServiceConfig);
-      const environmentName = environmentsService.getEnvironmentNameByHostname(window.location.hostname);
+    static getApiBaseUrl(): string {
+        const environmentsService = new EnvironmentsService({ companySubdomain: this.companySubdomain } as EnvironmentsServiceConfig);
+        const environmentName = environmentsService.getEnvironmentNameByHostname(window.location.hostname);
 
-      switch (environmentName) {
-          case 'qa':
-              return environment.qa.apiBaseUrl;
-          case 'sb':
-              return environment.sb.apiBaseUrl;
-          default:
-              return environment.apiBaseUrl;
-      }
-  }
+        switch (environmentName) {
+            case 'qa':
+                return environment.qa.apiBaseUrl;
+            case 'sb':
+                return environment.sb.apiBaseUrl;
+            default:
+                return environment.apiBaseUrl;
+        }
+    }
 
-  static getAuthorizationUrl(): string {
-      const environmentsService = new EnvironmentsService({ companySubdomain: this.companySubdomain } as EnvironmentsServiceConfig);
-      const environmentName = environmentsService.getEnvironmentNameByHostname(window.location.hostname);
+    static getAuthorizationUrl(): string {
+        const environmentsService = new EnvironmentsService({ companySubdomain: this.companySubdomain } as EnvironmentsServiceConfig);
+        const environmentName = environmentsService.getEnvironmentNameByHostname(window.location.hostname);
 
-      switch (environmentName) {
-          case 'qa':
-              return environment.qa.authorization.endpoint;
-          case 'sb':
-              return environment.sb.authorization.endpoint;
-          default:
-              return environment.authorization.endpoint;
-      }
-  }
+        switch (environmentName) {
+            case 'qa':
+                return environment.qa.authorization.endpoint;
+            case 'sb':
+                return environment.sb.authorization.endpoint;
+            default:
+                return environment.authorization.endpoint;
+        }
+    }
 }

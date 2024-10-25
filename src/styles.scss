@@ -1,6 +1,6 @@
 @use '@angular/material' as mat;
-@import "~material-icons/iconfont/material-icons.css";
-@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "material-icons/iconfont/material-icons.css";
+@import "bootstrap/dist/css/bootstrap.min.css";
 @import "theme.scss";
 
 /* Layout */
@@ -13,7 +13,7 @@ body {
 
 .mat-toolbar {
     background: #fff !important;
-    color: mat.get-color-from-palette($app-primary, 700) !important;
+    color: mat.m2-get-color-from-palette($app-primary, 700) !important;
 
     .mat-toolbar-row {
         height: 80px !important;
@@ -51,22 +51,22 @@ body {
 }
 
 a {
-    color: mat.get-color-from-palette($app-primary, 500) !important;
+    color: mat.m2-get-color-from-palette($app-primary, 500) !important;
 }
 
 a:hover {
-    color: mat.get-color-from-palette($app-primary, 700) !important;
+    color: mat.m2-get-color-from-palette($app-primary, 700) !important;
 }
 
 /* Buttons */
 .mat-mdc-raised-button.primary {
-    background-color: mat.get-color-from-palette($app-primary, 900) !important;
+    background-color: mat.m2-get-color-from-palette($app-primary, 900) !important;
     color: #fff !important;
     border-radius: 30px !important;
 }
 
 .mat-mdc-raised-button.primary:hover {
-    background-color: mat.get-color-from-palette($app-primary, 600) !important;
+    background-color: mat.m2-get-color-from-palette($app-primary, 600) !important;
 }
 
 /* Menu */
@@ -86,7 +86,7 @@ a:hover {
 
 .mat-menu-item,
 .mat-menu-item .mat-icon-no-color {
-    color: mat.get-color-from-palette($app-primary, 700) !important;
+    color: mat.m2-get-color-from-palette($app-primary, 700) !important;
 }
 
 /* Actions */
@@ -128,7 +128,7 @@ h4,
 .mat-mdc-card-title-group,
 .mat-mdc-card-title,
 .mat-mdc-card-subtitle {
-    color: mat.get-color-from-palette($app-primary, 700) !important;
+    color: mat.m2-get-color-from-palette($app-primary, 700) !important;
 }
 
 h3 {
@@ -235,4 +235,49 @@ app-confirmation{
             overflow: hidden !important;
         }
     }
-}   
+}
+
+app-role{
+    .mat-mdc-card{
+        padding: 16px;
+
+        .mat-mdc-card-content{
+            padding: 0px !important;
+        }
+    }
+}
+
+.mat-mdc-menu-item{
+    .mat-icon{
+        color: #6e3df7 !important;
+    }
+
+    .mat-mdc-menu-item-text{
+        color: #6e3df7;
+    }    
+}
+
+.mat-sort-header-content, .mat-mdc-header-cell, .mdc-list-item__primary-text {
+    font-size: 12px !important;
+}
+
+.mat-mdc-paginator-page-size-label, .mat-mdc-select-value-text, .mat-mdc-paginator-range-label, .mat-sort-header-content, .mat-mdc-header-cell {
+    color: #0000008A;
+}
+
+app-claim{
+    .mat-mdc-dialog-actions{
+        padding-bottom: 20px;
+        padding-right: 20px;
+    }
+}
+
+.mat-mdc-paginator-page-size-select{
+    .mat-mdc-text-field-wrapper{
+        padding: 0px 16px !important;
+    }
+}
+
+.mat-mdc-text-field-wrapper{
+    padding: 0px 16px 0px 0px !important;
+}
