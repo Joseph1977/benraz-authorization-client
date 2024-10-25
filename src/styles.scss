@@ -102,10 +102,6 @@ a:hover {
     padding: 0 16px !important;
 }
 
-.mat-mdc-dialog-actions {
-    margin-bottom: -12px !important;
-}
-
 .mat-mdc-card-actions button,
 .mat-mdc-dialog-actions button {
     margin-left: 8px !important;
@@ -226,3 +222,17 @@ app-application-token, app-view-application-token{
         padding: 0 24px 9px;
     }
 }
+
+app-confirmation{
+    .mat-mdc-dialog-actions{
+        padding: 20px;
+    }
+}
+
+.mat-mdc-dialog-container{
+    .mdc-dialog__container{
+        .mat-mdc-dialog-surface{
+            overflow: hidden !important;
+        }
+    }
+}   
