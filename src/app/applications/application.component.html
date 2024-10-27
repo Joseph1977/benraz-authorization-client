@@ -2,8 +2,9 @@
     <div class="row">
         <div class="col-12 col-lg-6 offset-lg-3">
             <mat-card>
+                <mat-card-title-group>
                 <mat-card-title>Application</mat-card-title>
-
+            </mat-card-title-group>
                 <div class="d-flex justify-content-center" *ngIf="isLoading">
                     <mat-spinner diameter="50"></mat-spinner>
                 </div>
@@ -13,14 +14,17 @@
                         <div [libEditAuthorizePolicy]="policies.APPLICATION_UPDATE">
                             <div class="row">
                                 <mat-form-field class="col-12">
+                                    <mat-label>Name</mat-label>
                                     <input matInput placeholder="Name" formControlName="name" />
                                 </mat-form-field>
 
                                 <mat-form-field class="col-12" *ngIf="applicationId">
+                                    <mat-label>Application id</mat-label>
                                     <input matInput placeholder="Application id" formControlName="id" readonly />
                                 </mat-form-field>
 
                                 <mat-form-field class="col-12" *ngIf="applicationId">
+                                    <mat-label>Audience</mat-label>
                                     <input matInput placeholder="Audience" formControlName="audience" readonly />
                                 </mat-form-field>
 
@@ -32,6 +36,7 @@
                                 </div>
 
                                 <mat-form-field class="col-12" *ngIf="isAccessTokenCookieEnabled">
+                                    <mat-label>Access token cookie name</mat-label>
                                     <input matInput placeholder="Access token cookie name"
                                         formControlName="accessTokenCookieName" />
                                 </mat-form-field>
@@ -46,6 +51,7 @@
                                 <div *ngFor="let urlForm of urlsFormArray?.controls">
                                     <div [formGroup]="urlForm" class="row">
                                         <mat-form-field class="col-12">
+                                            <mat-label>{{ urlForm.get('typeCode').value | urlType }}</mat-label>
                                             <input matInput [placeholder]="urlForm.get('typeCode').value | urlType"
                                                 formControlName="url" />
                                         </mat-form-field>
@@ -59,7 +65,7 @@
                         <mat-tab-group>
                             <mat-tab label="SSO connections">
                                 <div class="row" style="margin-top: 12px;">
-                                    <div class="col-12" style="display: flex;">
+                                    <div class="col-12 mat-mini-fab-btn" style="display: flex;">
                                         <span flex class="spacer"></span>
                                         <button mat-mini-fab color="primary" matTooltip="Add SSO connection"
                                             [matMenuTriggerFor]="appMenu" [disabled]="availableProviders?.length === 0"
@@ -88,22 +94,27 @@
                                                 <div
                                                     *ngIf="ssoConnectionForm.value.ssoProviderCode !== ssoProviderCode.Internal">
                                                     <mat-form-field class="col-12">
+                                                        <mat-label>Authorization URL</mat-label>
                                                         <input matInput placeholder="Authorization URL"
                                                             formControlName="authorizationUrl" />
                                                     </mat-form-field>
                                                     <mat-form-field class="col-12">
+                                                        <mat-label>Token URL</mat-label>
                                                         <input matInput placeholder="Token URL"
                                                             formControlName="tokenUrl" />
                                                     </mat-form-field>
                                                     <mat-form-field class="col-12">
+                                                        <mat-label>Client id</mat-label>
                                                         <input matInput placeholder="Client id"
                                                             formControlName="clientId" />
                                                     </mat-form-field>
                                                     <mat-form-field class="col-12">
+                                                        <mat-label>Client secret</mat-label>
                                                         <input matInput placeholder="Client secret"
                                                             formControlName="clientSecret" />
                                                     </mat-form-field>
                                                     <mat-form-field class="col-12">
+                                                        <mat-label>Scope</mat-label>
                                                         <input matInput placeholder="Scope" formControlName="scope" />
                                                     </mat-form-field>
                                                 </div>

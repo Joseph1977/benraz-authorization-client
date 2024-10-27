@@ -16,6 +16,15 @@
     border-radius: 0;
 }
 
-.mat-checkbox {
+.mat-mdc-checkbox {
     align-self: center;
+}
+
+.mat-mdc-tab-group{
+    .mat-mdc-tab-header{
+        border-bottom: 1px solid rgba(0,0,0,0.12);
+        .mat-mdc-tab{
+            flex-grow: 0 !important;
+        }
+    }
 }

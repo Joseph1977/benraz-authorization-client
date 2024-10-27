@@ -56,16 +56,19 @@
                         <div>
                             <div class="row">
                                 <mat-form-field class="col-12">
+                                    <mat-label>Full name</mat-label>
                                     <input matInput placeholder="Full name" formControlName="fullName" maxlength="500"
                                         [readonly]="userId" />
                                 </mat-form-field>
 
                                 <mat-form-field class="col-12">
+                                    <mat-label>Email</mat-label>
                                     <input matInput type="email" placeholder="Email" formControlName="email"
                                         [readonly]="userId" />
                                 </mat-form-field>
 
                                 <mat-form-field class="col-12">
+                                    <mat-label>Phone number</mat-label>
                                     <input matInput placeholder="Phone number" formControlName="phoneNumber"
                                         [readonly]="userId" />
                                 </mat-form-field>
@@ -77,11 +80,13 @@
                                 </div>
 
                                 <mat-form-field class="col-12" *ngIf="!userId && !isSsoOnly">
+                                    <mat-label>Password (Min 6 symbols)</mat-label>
                                     <input matInput type="password" placeholder="Password (Min 6 symbols)"
                                         formControlName="password" />
                                 </mat-form-field>
 
                                 <mat-form-field class="col-12" *ngIf="!userId && !isSsoOnly">
+                                    <mat-label>Repeat password</mat-label>
                                     <input matInput type="password" placeholder="Repeat password"
                                         formControlName="repeatPassword" />
                                 </mat-form-field>

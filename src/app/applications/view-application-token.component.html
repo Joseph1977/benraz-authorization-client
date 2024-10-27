@@ -1,26 +1,31 @@
 <div>
     <h1 mat-dialog-title>Application token</h1>
 
-    <div class="row" *ngIf="applicationToken">
+    <div class="row view-application-token" *ngIf="applicationToken">
         <mat-form-field class="col-12">
+        <mat-label>Id</mat-label>
             <input matInput placeholder="Id" [ngModel]="applicationToken.id" readonly />
         </mat-form-field>
 
         <mat-form-field class="col-12">
+		<mat-label>Name</mat-label>
             <input matInput placeholder="Name" [ngModel]="applicationToken.name" readonly />
         </mat-form-field>
 
         <mat-form-field class="col-12">
+		<mat-label>Expiration time</mat-label>
             <input matInput placeholder="Expiration time"
                 [ngModel]="applicationToken.expirationTimeUtc | date: 'MM/dd/yy hh:mm a'" readonly />
         </mat-form-field>
 
         <mat-form-field class="col-12">
+		<mat-label>Create time</mat-label>
             <input matInput placeholder="Create time"
                 [ngModel]="applicationToken.createTimeUtc | date: 'MM/dd/yy hh:mm a'" readonly />
         </mat-form-field>
 
         <mat-form-field class="col-12">
+		<mat-label>Created by</mat-label>
             <input matInput placeholder="Created by" [ngModel]="applicationToken.createdBy" readonly />
         </mat-form-field>
 

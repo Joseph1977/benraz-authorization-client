@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, FormArray } from '@angular/forms';
+import { AbstractControl, UntypedFormControl, UntypedFormGroup, UntypedFormArray } from '@angular/forms';
 
 @Injectable({
     providedIn: 'root',
@@ -14,16 +14,16 @@ export class ValidationService {
     }
 
     private validateControl(control: AbstractControl) {
-        if (control instanceof FormControl) {
+        if (control instanceof UntypedFormControl) {
             control.markAsTouched({ onlySelf: true });
-        } else if (control instanceof FormGroup) {
+        } else if (control instanceof UntypedFormGroup) {
             this.validateFormGroup(control);
-        } else if (control instanceof FormArray) {
+        } else if (control instanceof UntypedFormArray) {
             control.controls.forEach(x => this.validateControl(x));
         }
     }
 
-    private validateFormGroup(formGroup: FormGroup) {
+    private validateFormGroup(formGroup: UntypedFormGroup) {
         Object.keys(formGroup.controls).forEach(field => {
             this.validateControl(formGroup.get(field));
         });

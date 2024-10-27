@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, FormArray, FormControl, AbstractControl } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, UntypedFormArray, UntypedFormControl, AbstractControl } from '@angular/forms';
 import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Policies } from '../shared/shared.model';
@@ -16,7 +16,8 @@ import { User, UserStatusCode, UserClaim } from './users.model';
 @Component({
     selector: 'app-user',
     templateUrl: './user.component.html',
-    styleUrls: ['./user.component.scss']
+    styleUrls: ['./user.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class UserComponent implements OnInit {
     public policies = Policies;
@@ -35,9 +36,9 @@ export class UserComponent implements OnInit {
 
     public userId: string;
     public user: User;
-    public form: FormGroup;
-    public rolesFormArray: FormArray;
-    public claimsFormArray: FormArray;
+    public form: UntypedFormGroup;
+    public rolesFormArray: UntypedFormArray;
+    public claimsFormArray: UntypedFormArray;
     public isEmailVisible: boolean;
     public roles: Role[] = [];
     public userRoles: Role[] = [];
@@ -54,7 +55,7 @@ export class UserComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private fb: FormBuilder,
+        private fb: UntypedFormBuilder,
         private usersService: UsersService,
         private rolesService: RolesService,
         private claimsService: ClaimsService,
@@ -387,7 +388,7 @@ export class UserComponent implements OnInit {
         }
     }
 
-    private validateAllFormFields(formGroup: FormGroup) {
+    private validateAllFormFields(formGroup: UntypedFormGroup) {
         formGroup.updateValueAndValidity();
         Object.keys(formGroup.controls).forEach(field => {
             this.validateControl(formGroup.get(field));
@@ -395,12 +396,12 @@ export class UserComponent implements OnInit {
     }
 
     private validateControl(control: AbstractControl) {
-        if (control instanceof FormControl) {
+        if (control instanceof UntypedFormControl) {
             control.updateValueAndValidity();
             control.markAsTouched({ onlySelf: true });
-        } else if (control instanceof FormGroup) {
+        } else if (control instanceof UntypedFormGroup) {
             this.validateAllFormFields(control);
-        } else if (control instanceof FormArray) {
+        } else if (control instanceof UntypedFormArray) {
             control.controls.forEach(x => this.validateControl(x));
         }
     }

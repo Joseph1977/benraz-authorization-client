@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthenticationComponent, AuthorizePolicyGuardService } from '@josephbenraz/ngx-authorization';
+import { AuthenticationComponent, AuthorizePolicyGuardService } from '@josephbenraz/npm-authorization';
 import { LoginComponent } from './login/login.component';
 import { LayoutComponent } from './shared/layout/layout.component';
 import { Policies } from './shared/shared.model';
